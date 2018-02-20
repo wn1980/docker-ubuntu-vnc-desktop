@@ -23,14 +23,16 @@ RUN apt-get update \
         dbus-x11 x11-utils \
         terminator \
     && apt-get autoclean \
-    && apt-get autoremove
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/*
 
 # =================================
 # install ros (source: https://github.com/osrf/docker_images/blob/5399f380af0a7735405a4b6a07c6c40b867563bd/ros/kinetic/ubuntu/xenial/ros-core/Dockerfile)
 # install packages
 RUN apt-get install -y --no-install-recommends \
     dirmngr \
-    gnupg2
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
 
 # setup keys
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
@@ -57,9 +59,10 @@ RUN rosdep init \
 ENV ROS_DISTRO kinetic
 RUN apt-get update && apt-get install -y \
 #    ros-kinetic-ros-core=1.3.1-0* \
-    ros-kinetic-desktop-full=1.3.1-0*
+    ros-kinetic-desktop-full=1.3.1-0* \
     #              A
-    #              +--- full desktop
+    #              +--- full desktop \
+    && rm -rf /var/lib/apt/lists/*
 
 # setup entrypoint
 # COPY ./ros_entrypoint.sh /
@@ -79,9 +82,11 @@ ENV TINI_VERSION v0.9.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
 RUN chmod +x /bin/tini
 
-RUN cp /usr/share/applications/terminator.desktop /root/Desktop
 ADD image /
 RUN pip install setuptools wheel && pip install -r /usr/lib/web/requirements.txt
+
+RUN cp /usr/share/applications/terminator.desktop /root/Desktop
+RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc
 
 EXPOSE 80
 WORKDIR /root
