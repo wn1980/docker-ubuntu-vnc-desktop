@@ -66,7 +66,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # setup entrypoint
-COPY ./ros_entrypoint.sh /
+# COPY ./ros_entrypoint.sh /
 
 
 # =================================
