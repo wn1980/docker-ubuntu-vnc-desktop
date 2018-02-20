@@ -29,7 +29,7 @@ RUN apt-get update \
 # =================================
 # install ros (source: https://github.com/osrf/docker_images/blob/5399f380af0a7735405a4b6a07c6c40b867563bd/ros/kinetic/ubuntu/xenial/ros-core/Dockerfile)
 # install packages
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     dirmngr \
     gnupg2 \
     && rm -rf /var/lib/apt/lists/*
@@ -71,7 +71,7 @@ RUN apt-get update && apt-get install -y \
 # =================================
 
 # user tools
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     terminator \
     gedit \
     okular \
