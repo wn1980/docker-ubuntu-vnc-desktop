@@ -1,9 +1,6 @@
 FROM ubuntu:16.04
-MAINTAINER Doro Wu <fcwu.tw@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
-
-RUN sed -i 's#http://archive.ubuntu.com/#http://tw.archive.ubuntu.com/#' /etc/apt/sources.list
 
 # built-in packages
 RUN apt-get update \
@@ -30,8 +27,51 @@ RUN apt-get update \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+# =================================
+# install ros (source: https://github.com/osrf/docker_images/blob/5399f380af0a7735405a4b6a07c6c40b867563bd/ros/kinetic/ubuntu/xenial/ros-core/Dockerfile)
+# install packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    dirmngr \
+    gnupg2 \
+    && rm -rf /var/lib/apt/lists/*
 
-# tini for subreap                                   
+# setup keys
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
+
+# setup sources.list
+RUN echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list
+
+# install bootstrap tools
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    python-rosdep \
+    python-rosinstall \
+    python-vcstools \
+    && rm -rf /var/lib/apt/lists/*
+
+# setup environment
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+# bootstrap rosdep
+RUN rosdep init \
+    && rosdep update
+
+# install ros packages
+ENV ROS_DISTRO kinetic
+RUN apt-get update && apt-get install -y \
+#    ros-kinetic-ros-core=1.3.1-0* \
+    ros-kinetic-desktop-full=1.3.1-0* \
+    #              A
+    #              +--- full desktop
+    && rm -rf /var/lib/apt/lists/*
+
+# setup entrypoint
+COPY ./ros_entrypoint.sh /
+
+
+# =================================
+
+# tini for subreap
 ENV TINI_VERSION v0.9.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
 RUN chmod +x /bin/tini
