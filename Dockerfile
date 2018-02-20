@@ -42,7 +42,8 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python-rosdep \
     python-rosinstall \
-    python-vcstools
+    python-vcstools \
+    && rm -rf /var/lib/apt/lists/*
 
 # setup environment
 ENV LANG C.UTF-8
@@ -56,7 +57,7 @@ RUN rosdep init \
 ENV ROS_DISTRO kinetic
 RUN apt-get update && apt-get install -y \
 #    ros-kinetic-ros-core=1.3.1-0* \
-    ros-kinetic-desktop-full=1.3.1-0* \
+    ros-kinetic-desktop-full=1.3.1-0*
     #              A
     #              +--- full desktop
 
@@ -78,6 +79,7 @@ ENV TINI_VERSION v0.9.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /bin/tini
 RUN chmod +x /bin/tini
 
+RUN cp /usr/share/applications/terminator.desktop /root/Desktop
 ADD image /
 RUN pip install setuptools wheel && pip install -r /usr/lib/web/requirements.txt
 
