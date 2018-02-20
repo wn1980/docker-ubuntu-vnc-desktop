@@ -15,25 +15,22 @@ RUN apt-get update \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
-        libreoffice firefox \
-        fonts-wqy-microhei \
-        language-pack-zh-hant language-pack-gnome-zh-hant firefox-locale-zh-hant libreoffice-l10n-zh-tw \
+        firefox \
         nginx \
         python-pip python-dev build-essential \
         mesa-utils libgl1-mesa-dri \
         gnome-themes-standard gtk2-engines-pixbuf gtk2-engines-murrine pinta arc-theme \
         dbus-x11 x11-utils \
+        terminator \
     && apt-get autoclean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get autoremove
 
 # =================================
 # install ros (source: https://github.com/osrf/docker_images/blob/5399f380af0a7735405a4b6a07c6c40b867563bd/ros/kinetic/ubuntu/xenial/ros-core/Dockerfile)
 # install packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
     dirmngr \
-    gnupg2 \
-    && rm -rf /var/lib/apt/lists/*
+    gnupg2
 
 # setup keys
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 421C365BD9FF1F717815A3895523BAEEB01FA116
@@ -45,8 +42,7 @@ RUN echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources
 RUN apt-get update && apt-get install --no-install-recommends -y \
     python-rosdep \
     python-rosinstall \
-    python-vcstools \
-    && rm -rf /var/lib/apt/lists/*
+    python-vcstools
 
 # setup environment
 ENV LANG C.UTF-8
@@ -63,13 +59,19 @@ RUN apt-get update && apt-get install -y \
     ros-kinetic-desktop-full=1.3.1-0* \
     #              A
     #              +--- full desktop
-    && rm -rf /var/lib/apt/lists/*
 
 # setup entrypoint
 # COPY ./ros_entrypoint.sh /
 
 
 # =================================
+
+# user tools
+RUN apt-get install -y \
+    terminator \
+    gedit \
+    okular \
+    && rm -rf /var/lib/apt/lists/*
 
 # tini for subreap
 ENV TINI_VERSION v0.9.0
