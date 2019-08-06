@@ -20,9 +20,9 @@ import unittest
 import unittest
 import socket
 
-from mox3 import stubout
+import stubout
 
-from websockify import websockifyserver
+from websockify import websocket
 from websockify import websocketproxy
 from websockify import token_plugins
 from websockify import auth_plugins
@@ -75,7 +75,7 @@ class ProxyRequestHandlerTestCase(unittest.TestCase):
             FakeSocket(''), "127.0.0.1", FakeServer())
         self.handler.path = "https://localhost:6080/websockify?token=blah"
         self.handler.headers = None
-        self.stubs.Set(websockifyserver.WebSockifyServer, 'socket',
+        self.stubs.Set(websocket.WebSocketServer, 'socket',
                        staticmethod(lambda *args, **kwargs: None))
 
     def tearDown(self):
@@ -92,16 +92,6 @@ class ProxyRequestHandlerTestCase(unittest.TestCase):
 
         self.assertEqual(host, "some host")
         self.assertEqual(port, "some port")
-
-    def test_get_target_unix_socket(self):
-        class TestPlugin(token_plugins.BasePlugin):
-            def lookup(self, token):
-                return ("unix_socket", "/tmp/socket")
-
-        _, socket = self.handler.get_target(
-            TestPlugin(None), self.handler.path)
-
-        self.assertEqual(socket, "/tmp/socket")
 
     def test_get_target_raises_error_on_unknown_token(self):
         class TestPlugin(token_plugins.BasePlugin):

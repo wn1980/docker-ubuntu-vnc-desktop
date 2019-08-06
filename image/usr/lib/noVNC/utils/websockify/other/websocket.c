@@ -578,6 +578,12 @@ ws_ctx_t *do_handshake(int sock) {
     if (len == 0) {
         handler_msg("ignoring empty handshake\n");
         return NULL;
+    } else if (bcmp(handshake, "<policy-file-request/>", 22) == 0) {
+        len = recv(sock, handshake, 1024, 0);
+        handshake[len] = 0;
+        handler_msg("sending flash policy response\n");
+        send(sock, POLICY_RESPONSE, sizeof(POLICY_RESPONSE), 0);
+        return NULL;
     } else if ((bcmp(handshake, "\x16", 1) == 0) ||
                (bcmp(handshake, "\x80", 1) == 0)) {
         // SSL
@@ -606,28 +612,15 @@ ws_ctx_t *do_handshake(int sock) {
     }
     offset = 0;
     for (i = 0; i < 10; i++) {
-        /* (offset + 1): reserve one byte for the trailing '\0' */
-        if (0 > (len = ws_recv(ws_ctx, handshake + offset, sizeof(handshake) - (offset + 1)))) {
-            handler_emsg("Read error during handshake: %m\n");
-            free_ws_ctx(ws_ctx);
-            return NULL;
-        } else if (0 == len) {
+        len = ws_recv(ws_ctx, handshake+offset, 4096);
+        if (len == 0) {
             handler_emsg("Client closed during handshake\n");
-            free_ws_ctx(ws_ctx);
             return NULL;
         }
         offset += len;
         handshake[offset] = 0;
         if (strstr(handshake, "\r\n\r\n")) {
             break;
-        } else if (sizeof(handshake) <= (size_t)(offset + 1)) {
-            handler_emsg("Oversized handshake\n");
-            free_ws_ctx(ws_ctx);
-            return NULL;
-        } else if (9 == i) {
-            handler_emsg("Incomplete handshake\n");
-            free_ws_ctx(ws_ctx);
-            return NULL;
         }
         usleep(10);
     }
@@ -635,7 +628,6 @@ ws_ctx_t *do_handshake(int sock) {
     //handler_msg("handshake: %s\n", handshake);
     if (!parse_handshake(ws_ctx, handshake)) {
         handler_emsg("Invalid WS request\n");
-        free_ws_ctx(ws_ctx);
         return NULL;
     }
 

@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2016 Joel Martin
-# Copyright 2016 Solly Ross
+# Copyright (C) 2018 The noVNC Authors
 # Licensed under MPL 2.0 or any later version (see LICENSE.txt)
 
 usage() {
@@ -24,6 +23,8 @@ usage() {
     echo "                          Default: ./"
     echo "    --ssl-only            Disable non-https connections."
     echo "                                    "
+    echo "    --record FILE         Record traffic to FILE.session.js"
+    echo "                                    "
     exit 2
 }
 
@@ -36,6 +37,7 @@ CERT=""
 WEB=""
 proxy_pid=""
 SSLONLY=""
+RECORD_ARG=""
 
 die() {
     echo "$*"
@@ -63,6 +65,7 @@ while [ "$*" ]; do
     --cert)    CERT="${OPTARG}"; shift            ;;
     --web)     WEB="${OPTARG}"; shift            ;;
     --ssl-only) SSLONLY="--ssl-only"             ;;
+    --record) RECORD_ARG="--record ${OPTARG}"; shift ;;
     -h|--help) usage                              ;;
     -*) usage "Unknown chrooter option: ${param}" ;;
     *) break                                      ;;
@@ -70,11 +73,14 @@ while [ "$*" ]; do
 done
 
 # Sanity checks
-which netstat >/dev/null 2>&1 \
-    || die "Must have netstat installed"
-
-netstat -ltn | grep -qs ":${PORT} .*LISTEN" \
-    && die "Port ${PORT} in use. Try --listen PORT"
+if bash -c "exec 7<>/dev/tcp/localhost/${PORT}" &> /dev/null; then
+    exec 7<&-
+    exec 7>&-
+    die "Port ${PORT} in use. Try --listen PORT"
+else
+    exec 7<&-
+    exec 7>&-
+fi
 
 trap "cleanup" TERM QUIT INT EXIT
 
@@ -127,7 +133,7 @@ else
     if [[ $? -ne 0 ]]; then
         echo "No installed websockify, attempting to clone websockify..."
         WEBSOCKIFY=${HERE}/websockify/run
-        git clone https://github.com/kanaka/websockify ${HERE}/websockify
+        git clone https://github.com/novnc/websockify ${HERE}/websockify
 
         if [[ ! -e $WEBSOCKIFY ]]; then
             echo "Unable to locate ${HERE}/websockify/run after downloading"
@@ -142,7 +148,7 @@ fi
 
 echo "Starting webserver and WebSockets proxy on port ${PORT}"
 #${HERE}/websockify --web ${WEB} ${CERT:+--cert ${CERT}} ${PORT} ${VNC_DEST} &
-exec ${WEBSOCKIFY} ${SSLONLY} --web ${WEB} ${CERT:+--cert ${CERT}} ${PORT} ${VNC_DEST}
+${WEBSOCKIFY} ${SSLONLY} --web ${WEB} ${CERT:+--cert ${CERT}} ${PORT} ${VNC_DEST} ${RECORD_ARG} &
 proxy_pid="$!"
 sleep 1
 if ! ps -p ${proxy_pid} >/dev/null; then

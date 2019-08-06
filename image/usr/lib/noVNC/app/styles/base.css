@@ -1,8 +1,6 @@
 /*
  * noVNC base CSS
- * Copyright (C) 2012 Joel Martin
- * Copyright (C) 2016 Samuel Mannehed for Cendio AB
- * Copyright (C) 2016 Pierre Ossman for Cendio AB
+ * Copyright (C) 2018 The noVNC Authors
  * noVNC is licensed under the MPL 2.0 (see LICENSE.txt)
  * This file is licensed under the 2-Clause BSD license (see LICENSE.txt).
  */
@@ -57,6 +55,7 @@ html {
   width: 10px;
   height: 10px;
   border-radius: 2px;
+  box-shadow: -60px 10px 0 rgba(255, 255, 255, 0);
   animation: noVNC_spinner 1.0s linear infinite;
 }
 .noVNC_spinner::before {
@@ -215,36 +214,44 @@ select:active {
  */
 
 #noVNC_fallback_error {
-  position: fixed;
   z-index: 1000;
-  left: 50%;
-  transform: translate(-50%, -50px);
+  visibility: hidden;
+}
+#noVNC_fallback_error.noVNC_open {
+  visibility: visible;
+}
+
+#noVNC_fallback_error > div {
+  max-width: 90%;
+  padding: 15px;
+
   transition: 0.5s ease-in-out;
 
-  visibility: hidden;
+  transform: translateY(-50px);
   opacity: 0;
-
-  top: 60px;
-  padding: 15px;
-  width: auto;
 
   text-align: center;
   font-weight: bold;
-  word-wrap: break-word;
   color: #fff;
 
   border-radius: 10px;
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
   background: rgba(200,55,55,0.8);
 }
-#noVNC_fallback_error.noVNC_open {
-  transform: translate(-50%, 0);
-  visibility: visible;
+#noVNC_fallback_error.noVNC_open > div {
+  transform: translateY(0);
   opacity: 1;
 }
 
 #noVNC_fallback_errormsg {
   font-weight: normal;
+}
+
+#noVNC_fallback_errormsg .noVNC_message {
+  display: inline-block;
+  text-align: left;
+  font-family: monospace;
+  white-space: pre-wrap;
 }
 
 #noVNC_fallback_error .noVNC_location {
@@ -254,13 +261,16 @@ select:active {
 }
 
 #noVNC_fallback_error .noVNC_stack {
+  max-height: 50vh;
   padding: 10px;
   margin: 10px;
   font-size: 0.8em;
   text-align: left;
+  font-family: monospace;
   white-space: pre;
   border: 1px solid rgba(0, 0, 0, 0.5);
   background: rgba(0, 0, 0, 0.2);
+  overflow: auto;
 }
 
 /* ----------------------------------------
@@ -392,6 +402,36 @@ select:active {
   padding: 0 5px 0 10px;
 }
 
+/* Control bar hint */
+#noVNC_control_bar_hint {
+  position: fixed;
+  left: calc(100vw - 50px);
+  right: auto;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 100px;
+  height: 50%;
+  max-height: 600px;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.2s ease-in-out;
+  background: transparent;
+  box-shadow: 0 0 10px black, inset 0 0 10px 10px rgba(110, 132, 163, 0.8);
+  border-radius: 10px;
+  transition-delay: 0s;
+}
+#noVNC_control_bar_anchor.noVNC_right #noVNC_control_bar_hint{
+  left: auto;
+  right: calc(100vw - 50px);
+}
+#noVNC_control_bar_hint.noVNC_active {
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0.2s;
+  transform: translateY(-50%) scale(1);
+}
+
 /* General button style */
 .noVNC_button {
   display: block;
@@ -415,11 +455,15 @@ select:active {
   padding-top: 5px;
   padding-bottom: 3px;
 }
-:root:not(.noVNC_touch) .noVNC_button.noVNC_selected:hover {
+/* Android browsers don't properly update hover state if touch events
+ * are intercepted, but focus should be safe to display */
+:root:not(.noVNC_touch) .noVNC_button.noVNC_selected:hover,
+.noVNC_button.noVNC_selected:focus {
   border-color: rgba(0, 0, 0, 0.4);
   background: rgba(0, 0, 0, 0.2);
 }
-:root:not(.noVNC_touch) .noVNC_button:hover {
+:root:not(.noVNC_touch) .noVNC_button:hover,
+.noVNC_button:focus {
   background: rgba(255, 255, 255, 0.2);
 }
 .noVNC_button.noVNC_hidden {
@@ -545,17 +589,17 @@ select:active {
   padding: 0 10px;
 }
 
-/* XVP Shutdown/Reboot */
-:root:not(.noVNC_connected) #noVNC_xvp_button {
+/* Shutdown/Reboot */
+:root:not(.noVNC_connected) #noVNC_power_button {
   display: none;
 }
-#noVNC_xvp {
+#noVNC_power {
 }
-#noVNC_xvp_buttons {
+#noVNC_power_buttons {
   display: none;
 }
 
-#noVNC_xvp input[type=button] {
+#noVNC_power input[type=button] {
   width: 100%;
 }
 
@@ -774,6 +818,7 @@ select:active {
   justify-content: center;
   flex-direction: column;
 }
+:root.noVNC_loading #noVNC_transition,
 :root.noVNC_connecting #noVNC_transition,
 :root.noVNC_disconnecting #noVNC_transition,
 :root.noVNC_reconnecting #noVNC_transition {
@@ -805,27 +850,6 @@ select:active {
   left: -40px;
   z-index: -1;
   ime-mode: disabled;
-}
-
-/* HTML5 Canvas */
-#noVNC_screen {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(40, 40, 40);
-}
-:root:not(.noVNC_connected) #noVNC_screen {
-  display: none;
-}
-
-/* Do not set width/height for VNC_canvas or incorrect
- * scaling will occur. Canvas size depends on remote VNC
- * settings and noVNC settings. */
-#noVNC_canvas {
-  margin: auto;
-  /* IE miscalculates width without this :( */
-  flex-shrink: 0;
 }
 
 /*Default noVNC logo.*/

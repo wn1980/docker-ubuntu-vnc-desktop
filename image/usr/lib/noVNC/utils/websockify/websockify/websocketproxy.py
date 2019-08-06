@@ -17,7 +17,7 @@ except: from SocketServer import ForkingMixIn
 try:    from http.server import HTTPServer
 except: from BaseHTTPServer import HTTPServer
 import select
-from websockify import websockifyserver
+from websockify import websocket
 from websockify import auth_plugins as auth
 try:
     from urllib.parse import parse_qs, urlparse
@@ -25,9 +25,7 @@ except:
     from cgi import parse_qs
     from urlparse import urlparse
 
-class ProxyRequestHandler(websockifyserver.WebSockifyRequestHandler):
-
-    buffer_size = 65536
+class ProxyRequestHandler(websocket.WebSocketRequestHandler):
 
     traffic_legend = """
 Traffic Legend:
@@ -50,14 +48,8 @@ Traffic Legend:
         self.end_headers()
     
     def validate_connection(self):
-        if self.server.token_plugin:
-            host, port = self.get_target(self.server.token_plugin, self.path)
-            if host == 'unix_socket':
-                self.server.unix_target = port
-
-            else:
-                self.server.target_host = host
-                self.server.target_port = port
+        if self.server.token_plugin: 
+            (self.server.target_host, self.server.target_port) = self.get_target(self.server.token_plugin, self.path)
 
         if self.server.auth_plugin:
             try:
@@ -88,15 +80,9 @@ Traffic Legend:
             msg += " (using SSL)"
         self.log_message(msg)
 
-        tsock = websockifyserver.WebSockifyServer.socket(self.server.target_host,
-                                                       self.server.target_port,
-                                                       connect=True,
-                                                       use_ssl=self.server.ssl_target,
-                                                       unix_socket=self.server.unix_target)
-
-        self.request.setsockopt(socket.SOL_TCP, socket.TCP_NODELAY, 1)
-        if not self.server.wrap_cmd and not self.server.unix_target:
-            tsock.setsockopt(socket.SOL_TCP, socket.TCP_NODELAY, 1)
+        tsock = websocket.WebSocketServer.socket(self.server.target_host,
+                                                 self.server.target_port,
+                connect=True, use_ssl=self.server.ssl_target, unix_socket=self.server.unix_target)
 
         self.print_traffic(self.traffic_legend)
 
@@ -221,10 +207,12 @@ Traffic Legend:
                 cqueue.append(buf)
                 self.print_traffic("{")
 
-class WebSocketProxy(websockifyserver.WebSockifyServer):
+class WebSocketProxy(websocket.WebSocketServer):
     """
     Proxy traffic to and from a WebSockets client to a normal TCP
-    socket server target.
+    socket server target. All traffic to/from the client is base64
+    encoded/decoded to allow binary data to be sent/received to/from
+    the target.
     """
 
     buffer_size = 65536
@@ -274,7 +262,7 @@ class WebSocketProxy(websockifyserver.WebSockifyServer):
                 "REBIND_OLD_PORT": str(kwargs['listen_port']),
                 "REBIND_NEW_PORT": str(self.target_port)})
 
-        websockifyserver.WebSockifyServer.__init__(self, RequestHandlerClass, *args, **kwargs)
+        websocket.WebSocketServer.__init__(self, RequestHandlerClass, *args, **kwargs)
 
     def run_wrap_cmd(self):
         self.msg("Starting '%s'", " ".join(self.wrap_cmd))
@@ -419,6 +407,8 @@ def websockify_init():
     parser.add_option("--auth-source", default=None, metavar="ARG",
                       help="an argument to be passed to the auth plugin"
                            "on instantiation")
+    parser.add_option("--auto-pong", action="store_true",
+            help="Automatically respond to ping frames with a pong")
     parser.add_option("--heartbeat", type=int, default=0,
             help="send a ping to the client every HEARTBEAT seconds")
     parser.add_option("--log-file", metavar="FILE",
@@ -467,7 +457,7 @@ def websockify_init():
         if len(args) > 2:
             parser.error("Too many arguments")
 
-    if not websockifyserver.ssl and opts.ssl_target:
+    if not websocket.ssl and opts.ssl_target:
         parser.error("SSL target requested and Python SSL module not loaded.");
 
     if opts.ssl_only and not os.path.exists(opts.cert):

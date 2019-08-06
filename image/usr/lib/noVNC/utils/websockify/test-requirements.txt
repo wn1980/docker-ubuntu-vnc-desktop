@@ -1,2 +1,2 @@
-mox3
+mox
 nose
