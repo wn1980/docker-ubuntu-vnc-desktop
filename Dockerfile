@@ -88,7 +88,7 @@ RUN apt-get update && apt-get install -y \
     inetutils-ping \
     keyboard-configuration \
     xfonts-thai \
-    ros-$ROS_DISTRO-turtblebot* \
+    ros-$ROS_DISTRO-turtlebot* \
     && rm -rf /var/lib/apt/lists/*
 
 RUN cp /usr/share/applications/terminator.desktop /root/Desktop
