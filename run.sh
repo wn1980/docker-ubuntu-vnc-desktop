@@ -14,4 +14,5 @@ docker run -d --name $NAME \
 	--restart unless-stopped \
 	-v /dev:/dev \
 	-v /etc/localtime:/etc/localtime:ro \
-	wn1980/wros
+	-e RESOLUTION=$p1080 \
+	wn1980/w-ros
