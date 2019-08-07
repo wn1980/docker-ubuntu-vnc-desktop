@@ -9,6 +9,8 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
 	vim-tiny \
     net-tools \
     lxde \
+    icewm \
+    jwm \
     x11vnc \
     xvfb \
     gtk2-engines-murrine \
@@ -22,6 +24,7 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     gtk2-engines-murrine \
     dbus-x11 \
     x11-utils \
+    xterm \
     terminator \
     pluma \
     nano \

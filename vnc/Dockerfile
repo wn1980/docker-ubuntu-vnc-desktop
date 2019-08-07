@@ -7,7 +7,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-arm64
 RUN chmod +x /bin/tini-*
 
 # add configuation files
-ADD image /
+ADD ./setup/image /
 
 # install packages
 COPY ./setup/install/novnc.sh /opt/install/
