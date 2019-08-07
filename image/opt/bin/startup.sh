@@ -15,10 +15,10 @@ if [ -n "$VNC_PASSWORD" ]; then
 fi
 
 if [ -n "$RESOLUTION" ]; then
-    sed -i "s/1024x768/$RESOLUTION/" /usr/local/bin/xvfb.sh
+    sed -i "s/1024x768/$RESOLUTION/" /opt/bin/xvfb.sh
 fi
 
 #cd /usr/lib/web && ./run.py > /var/log/web.log 2>&1 &
 #nginx -c /etc/nginx/nginx.conf
 
-exec /bin/tini -- /usr/bin/supervisord -n
+exec /bin/tini-$(uname -m) -- /usr/bin/supervisord -n
