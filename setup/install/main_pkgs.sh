@@ -20,12 +20,10 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     gnome-themes-standard \
     gtk2-engines-pixbuf \
     gtk2-engines-murrine \
-    pinta \
     dbus-x11 \
     x11-utils \
     terminator \
-    gedit \
-    okular \
+    pluma \
     nano \
     htop \
     lsb-release \
@@ -41,3 +39,5 @@ cp /usr/share/applications/terminator.desktop /root/Desktop
     #nginx \
     #python-pip python-dev \
     #arc-theme \
+    #okular \
+    #pinta \

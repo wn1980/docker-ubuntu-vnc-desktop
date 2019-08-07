@@ -30,11 +30,10 @@ RUN rosdep init \
 # install ros packages
 apt-get update && apt-get install -y \
 	ros-kinetic-ros-core=1.3.2-0* \
+	ros-kinetic-turtlebot* \
     && rm -rf /var/lib/apt/lists/*
 
 #	ros-kinetic-desktop-full=1.3.2-0* \
-#   ros-kineticturtlebot* \
-
 # setup entrypoint
 # COPY ./ros_entrypoint.sh /
 
