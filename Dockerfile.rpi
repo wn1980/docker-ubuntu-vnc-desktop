@@ -2,29 +2,31 @@ FROM arm64v8/ubuntu:16.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# built-in packages
+# starting packages
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends software-properties-common curl \
+    && apt-get install -y --no-install-recommends software-properties-common curl wget \
     && sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' >> /etc/apt/sources.list.d/arc-theme.list" \
     && curl -SL http://download.opensuse.org/repositories/home:Horst3180/xUbuntu_16.04/Release.key | apt-key add - \
-    #&& add-apt-repository ppa:fcwu-tw/ppa \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends --allow-unauthenticated \
-        supervisor \
-        openssh-server pwgen sudo vim-tiny \
-        net-tools \
-        lxde x11vnc xvfb \
-        gtk2-engines-murrine ttf-ubuntu-font-family \
-        firefox \
-        nginx \
-        python-pip python-dev build-essential \
-        mesa-utils libgl1-mesa-dri \
-        gnome-themes-standard gtk2-engines-pixbuf gtk2-engines-murrine pinta arc-theme \
-        dbus-x11 x11-utils \
-        terminator \
-    && apt-get autoclean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
+    && add-apt-repository ppa:fcwu-tw/ppa 
+
+# tini for subreap
+ARG TINI_VERSION=v0.18.0
+#ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-amd64 /bin/tini
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-arm64 /bin/tini
+RUN chmod +x /bin/tini
+
+### Install noVNC - HTML5 based VNC viewer (noVNC v1.1.0 & websockify v0.8.0)
+ENV NO_VNC_HOME=/usr/lib/noVNC
+RUN mkdir -p $NO_VNC_HOME/utils/websockify
+RUN wget -qO- https://github.com/novnc/noVNC/archive/v1.1.0.tar.gz | tar xz --strip 1 -C $NO_VNC_HOME
+# use older version of websockify to prevent hanging connections on offline containers, see https://github.com/ConSol/docker-headless-vnc-container/issues/50
+RUN wget -qO- https://github.com/novnc/websockify/archive/v0.8.0.tar.gz | tar xz --strip 1 -C $NO_VNC_HOME/utils/websockify
+RUN chmod +x -v $NO_VNC_HOME/utils/*.sh && \
+	ln -s $NO_VNC_HOME/vnc.html $NO_VNC_HOME/index.html
+
+# add configuation files
+ADD image /
+#RUN pip install setuptools wheel && pip install -r /usr/lib/web/requirements.txt
 
 # =================================
 # install ros (source: https://github.com/osrf/docker_images/blob/5399f380af0a7735405a4b6a07c6c40b867563bd/ros/kinetic/ubuntu/xenial/ros-core/Dockerfile)
@@ -67,15 +69,6 @@ RUN apt-get update && apt-get install -y \
 
 # =================================
 
-# tini for subreap
-ARG TINI_VERSION=v0.18.0
-#ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-amd64 /bin/tini
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-arm64 /bin/tini
-RUN chmod +x /bin/tini
-
-ADD image /
-RUN pip install setuptools wheel && pip install -r /usr/lib/web/requirements.txt
-
 # user tools
 RUN apt-get update && apt-get install -y \
     terminator \
@@ -91,8 +84,27 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-turtlebot* \
     && rm -rf /var/lib/apt/lists/*
 
+# built-in packages
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends --allow-unauthenticated \
+        supervisor \
+        openssh-server pwgen sudo vim-tiny \
+        net-tools \
+        lxde x11vnc xvfb \
+        gtk2-engines-murrine ttf-ubuntu-font-family \
+        firefox \
+        nginx \
+        python-pip python-dev build-essential \
+        mesa-utils libgl1-mesa-dri \
+        gnome-themes-standard gtk2-engines-pixbuf gtk2-engines-murrine pinta arc-theme \
+        dbus-x11 x11-utils \
+        terminator \
+    && apt-get autoclean \
+    && apt-get autoremove \
+    && rm -rf /var/lib/apt/lists/*
+
+# final config.
 RUN cp /usr/share/applications/terminator.desktop /root/Desktop
-#RUN echo "source /opt/ros/kinetic/setup.bash" >> /root/.bashrc
 
 RUN sh -c 'echo "\n### ROS config." >> ~/.bashrc' && \
 	sh -c 'echo "source /opt/ros/$ROS_DISTRO/setup.bash\n" >> ~/.bashrc'
@@ -117,7 +129,8 @@ RUN sh -c 'echo "\n# TurtleBot settings" >> $HOME/.bashrc' && \
 # ROS master port
 EXPOSE 11311
 
-EXPOSE 80
+# noVNC port
+EXPOSE 6081
 
 WORKDIR /root
 
@@ -125,3 +138,4 @@ ENV HOME=/home/ubuntu \
     SHELL=/bin/bash
 
 ENTRYPOINT ["/startup.sh"]
+
