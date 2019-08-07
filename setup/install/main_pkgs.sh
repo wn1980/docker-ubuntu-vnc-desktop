@@ -14,10 +14,6 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     gtk2-engines-murrine \
     ttf-ubuntu-font-family \
     firefox \
-   	#openssh-server \
-    #nginx \
-    #python-pip python-dev \
-    
     build-essential \
     mesa-utils \
     libgl1-mesa-dri \
@@ -25,11 +21,8 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     gtk2-engines-pixbuf \
     gtk2-engines-murrine \
     pinta \
-    arc-theme \
     dbus-x11 \
     x11-utils \
-    
-# user tools
     terminator \
     gedit \
     okular \
@@ -43,3 +36,8 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     && rm -rf /var/lib/apt/lists/*
 
 cp /usr/share/applications/terminator.desktop /root/Desktop
+
+   	#openssh-server \
+    #nginx \
+    #python-pip python-dev \
+    #arc-theme \
