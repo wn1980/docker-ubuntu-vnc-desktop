@@ -12,10 +12,10 @@ ADD ./setup/image /
 
 COPY ./setup/ui/wallpapers /opt/wallpapers
 #icewm ui
-COPY ./setup/ui/icewm ~/.icewm
+COPY ./setup/ui/icewm /root/.icewm
 #jwm ui
-COPY ./setup/ui/jwm/jwmrc ~/.jwm
-RUN ln -s $HOME/.jwm/main.jwmrc ~/.jwmrc
+COPY ./setup/ui/jwm/jwmrc /root/.jwm
+RUN ln -s $HOME/.jwm/main.jwmrc /root/.jwmrc
 COPY ./setup/ui/jwm/jwm-session /usr/bin/
 RUN chmod a+x /usr/bin/jwm-session
 

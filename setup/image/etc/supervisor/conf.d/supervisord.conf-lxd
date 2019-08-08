@@ -1,6 +1,7 @@
 [program:xvfb]
 priority=10
 directory=/
+#command=/usr/bin/Xvfb :1 -screen 0 1024x768x16
 command=/opt/bin/xvfb.sh
 user=root
 autostart=true
@@ -9,17 +10,41 @@ stopsignal=QUIT
 stdout_logfile=/opt/log/xvfb.log
 redirect_stderr=true
 
-[program:xsession]
+[program:lxsession]
 priority=15
 directory=/root
-command=/usr/bin/jwm
+command=/usr/bin/openbox
 user=root
 autostart=true
 autorestart=true
 stopsignal=QUIT
 environment=DISPLAY=":1",HOME="/root",USER="root"
-stdout_logfile=/opt/log/wm.log
+stdout_logfile=/opt/log/openbox.log
 redirect_stderr=true
+
+[program:lxpanel]
+priority=15
+directory=/root
+command=/usr/bin/lxpanel --profile LXDE
+user=root
+autostart=true
+autorestart=true
+stopsignal=QUIT
+environment=DISPLAY=":1",HOME="/root",USER="root"
+stdout_logfile=/opt/log/lxpanel.log
+redirect_stderr=true
+
+[program:pcmanfm]
+priority=15
+directory=/root
+command=/usr/bin/pcmanfm --desktop --profile LXDE
+user=root
+autostart=true
+autorestart=true
+stopsignal=QUIT
+environment=DISPLAY=":1",HOME="/root",USER="root"
+stdout_logfile=/opt/log/pcmanfm.log
+
 
 [program:x11vnc]
 priority=20
