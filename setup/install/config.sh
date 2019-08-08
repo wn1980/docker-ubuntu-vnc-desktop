@@ -3,7 +3,7 @@
 set -e
 
 sh -c 'echo "\n### ROS config." >> ~/.bashrc' 
-sh -c 'echo "source /opt/ros/kinetic/setup.bash\n" >> ~/.bashrc'
+sh -c 'echo "source /opt/ros/$ROS_DISTRO/setup.bash\n" >> ~/.bashrc'
 
 sh -c 'echo "#export ROS_MASTER_URI=http://localhost:11311" >> ~/.bashrc' 
 sh -c 'echo "#export ROS_HOSTNAME=\$HOSTNAME\n" >> ~/.bashrc'

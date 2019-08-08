@@ -4,7 +4,6 @@ set -e
     
 apt-get update && apt-get install --no-install-recommends --allow-unauthenticated -y \
 	supervisor \
-	sudo \
     icewm \
     jwm \
     x11vnc \
