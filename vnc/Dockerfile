@@ -4,10 +4,20 @@ FROM wn1980/w-ros-kinetic
 ARG TINI_VERSION=v0.18.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-amd64 /bin/tini-x86_64
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-arm64 /bin/tini-aarch64
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-armhf /bin/tini-armhf
 RUN chmod +x /bin/tini-*
 
 # add configuation files
 ADD ./setup/image /
+
+COPY ./setup/ui/wallpapers /opt/wallpapers
+#icewm ui
+COPY ./setup/ui/icewm ~/.icewm
+#jwm ui
+COPY ./setup/ui/jwm/jwmrc ~/.jwm
+RUN ln -s $HOME/.jwm/main.jwmrc ~/.jwmrc
+COPY ./setup/ui/jwm/jwm-session /usr/bin/
+RUN chmod a+x /usr/bin/jwm-session
 
 # install packages
 COPY ./setup/install/novnc.sh /opt/install/
@@ -23,7 +33,7 @@ RUN apt-get autoclean && \
 # ROS master port
 EXPOSE 11311
 
-EXPOSE 6081
+EXPOSE 6901
 
 WORKDIR /root
 

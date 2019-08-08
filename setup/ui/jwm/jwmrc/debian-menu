@@ -1,0 +1,70 @@
+<JWM>
+<!-- Automatically generated and updated. Do not touch -->
+    <Menu label="Debian">
+      <Menu label="Applications">
+        <Menu label="Education">
+          <Program label="Scratch">/usr/bin/scratch</Program>
+        </Menu>
+        <Menu label="File Management">
+          <Program label="Xarchiver">/usr/bin/xarchiver</Program>
+        </Menu>
+        <Menu label="Network">
+          <Menu label="Web Browsing">
+            <Program label="Dillo">/usr/bin/dillo</Program>
+            <Program label="Epiphany web browser">/usr/bin/epiphany-browser</Program>
+            <Program label="Netsurf Web Browser">/usr/bin/netsurf-gtk</Program>
+          </Menu>
+        </Menu>
+        <Menu label="Programming">
+          <Program label="Erlang Shell">x-terminal-emulator  -T &quot;Erlang Shell&quot; -e sh -c &quot;/usr/bin/erl&quot;</Program>
+          <Program label="GDB">x-terminal-emulator  -T &quot;GDB&quot; -e sh -c &quot;/usr/bin/gdb&quot;</Program>
+          <Program label="Tclsh8.6">x-terminal-emulator  -T &quot;Tclsh8.6&quot; -e sh -c &quot;/usr/bin/tclsh8.6&quot;</Program>
+          <Program label="TkWish8.6">x-terminal-emulator -e /usr/bin/wish8.6</Program>
+        </Menu>
+        <Menu label="Science">
+          <Menu label="Mathematics">
+            <Program label="Dc">x-terminal-emulator  -T &quot;Dc&quot; -e sh -c &quot;/usr/bin/dc&quot;</Program>
+            <Program label="galculator">/usr/bin/galculator</Program>
+          </Menu>
+        </Menu>
+        <Menu label="Shells">
+          <Program label="Bash">x-terminal-emulator  -T &quot;Bash&quot; -e sh -c &quot;/bin/bash --login&quot;</Program>
+          <Program label="Dash">x-terminal-emulator  -T &quot;Dash&quot; -e sh -c &quot;/bin/dash -i&quot;</Program>
+          <Program label="Sh">x-terminal-emulator  -T &quot;Sh&quot; -e sh -c &quot;/bin/sh --login&quot;</Program>
+        </Menu>
+        <Menu label="Sound">
+          <Program label="PiMixer">/usr/bin/pimixer</Program>
+          <Program label="TiMidity++">timidity -ia</Program>
+        </Menu>
+        <Menu label="System">
+          <Menu label="Administration">
+            <Program label="Debian Task selector">x-terminal-emulator  -T &quot;Debian Task selector&quot; -e sh -c &quot;su-to-root -c tasksel&quot;</Program>
+            <Program label="Editres">editres</Program>
+            <Program label="Xfontsel">xfontsel</Program>
+            <Program label="Xkill">xkill</Program>
+            <Program label="Xrefresh">xrefresh</Program>
+          </Menu>
+          <Menu label="Hardware">
+            <Program label="Xvidtune">xvidtune</Program>
+          </Menu>
+          <Menu label="Monitoring">
+            <Program label="Pstree">x-terminal-emulator  -T &quot;Pstree&quot; -e sh -c &quot;/usr/bin/pstree.x11&quot;</Program>
+            <Program label="Top">x-terminal-emulator  -T &quot;Top&quot; -e sh -c &quot;/usr/bin/top&quot;</Program>
+            <Program label="Xev">x-terminal-emulator -e xev</Program>
+          </Menu>
+          <Menu label="Package Management">
+            <Program label="Aptitude Package Manager (text)">x-terminal-emulator  -T &quot;Aptitude Package Manager (text)&quot; -e sh -c &quot;/usr/bin/aptitude-curses&quot;</Program>
+          </Menu>
+        </Menu>
+        <Menu label="Terminal Emulators">
+          <Program label="X-Terminal as root (GKsu)">/usr/bin/gksu -u root /usr/bin/x-terminal-emulator</Program>
+        </Menu>
+      </Menu>
+      <Menu label="Education">
+        <Program label="Sonic Pi">/usr/bin/sonic-pi</Program>
+      </Menu>
+      <Menu label="Help">
+        <Program label="Info">x-terminal-emulator  -T &quot;Info&quot; -e sh -c &quot;info&quot;</Program>
+      </Menu>
+    </Menu>
+</JWM>

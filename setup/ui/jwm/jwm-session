@@ -1,0 +1,8 @@
+#!/bin/sh
+
+xsetroot -solid "#000000"
+xrdb -load $HOME/.Xresources
+#x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
+#x-window-manager &
+
+exec /usr/bin/jwm
