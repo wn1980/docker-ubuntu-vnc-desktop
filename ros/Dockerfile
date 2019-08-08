@@ -1,10 +1,10 @@
 FROM wn1980/w-ros-ubuntu
 
 # setup environment
-ENV DEBIAN_FRONTEND noninteractive \
-	LANG C.UTF-8 \
-	LC_ALL C.UTF-8 \
-	ROS_DISTRO kinetic
+ENV DEBIAN_FRONTEND=noninteractive \
+	LANG=C.UTF-8 \
+	LC_ALL=C.UTF-8 \
+	ROS_DISTRO=kinetic
 
 COPY ./setup/install/ros.sh /opt/install/
 RUN /opt/install/ros.sh
