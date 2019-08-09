@@ -20,10 +20,10 @@ RUN apt-get autoclean && \
 #RUN chmod +x /bin/tini-*
 
 # add configuation files
-ADD ./setup/image /
+COPY ./setup/opt /opt
 
-COPY ./setup/ui/jwm/jwm-session /opt/bin/
-RUN chmod a+x /opt/bin/jwm-session
+COPY ./setup/ui/jwm/jwm-session /opt/docker/bin/
+RUN chmod a+x /opt/docker/bin/jwm-session
 
 #wallpapers
 COPY ./setup/ui/wallpapers /opt/wallpapers
@@ -35,7 +35,7 @@ EXPOSE 11311
 #noVNC port
 EXPOSE 6901
 
-RUN chmod -Rf 777 /opt/log/
+RUN chmod -Rf 777 /opt/docker/log/
 
 USER $USER
 
@@ -51,4 +51,4 @@ RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
 
 USER root
 
-ENTRYPOINT ["/opt/bin/startup.sh"]
+ENTRYPOINT ["/opt/docker/bin/startup.sh"]
