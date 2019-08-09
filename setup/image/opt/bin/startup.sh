@@ -1,16 +1,16 @@
 #!/bin/bash
 
-mkdir -p /var/run/sshd
+#mkdir -p /var/run/sshd
 
-chown -R root:root /root
-mkdir -p /root/.config/pcmanfm/LXDE/
-cp /usr/share/doro-lxde-wallpapers/desktop-items-0.conf /root/.config/pcmanfm/LXDE/
+#chown -R root:root /root
+#mkdir -p /root/.config/pcmanfm/LXDE/
+#cp /usr/share/doro-lxde-wallpapers/desktop-items-0.conf /root/.config/pcmanfm/LXDE/
 
 if [ -n "$VNC_PASSWORD" ]; then
-    echo -n "$VNC_PASSWORD" > /.password1
-    x11vnc -storepasswd $(cat /.password1) /.password2
-    chmod 400 /.password*
-    sed -i 's/^command=x11vnc.*/& -rfbauth \/.password2/' /etc/supervisor/conf.d/supervisord.conf
+    echo -n "$VNC_PASSWORD" > $HOME/.password1
+    x11vnc -storepasswd $(cat $HOME/.password1) $HOME/.password2
+    chmod 444 $HOME/.password*
+    sed -i 's/^command=x11vnc.*/& -rfbauth %(ENV_HOME)s\/.password2/' /etc/supervisor/conf.d/supervisord.conf
     export VNC_PASSWORD=
 fi
 

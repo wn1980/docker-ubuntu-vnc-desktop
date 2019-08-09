@@ -8,6 +8,8 @@ set -e
 apt-get update && apt-get install -y --no-install-recommends \
     dirmngr \
     gnupg2 \
+    sudo \
+    lsb-release \
     && rm -rf /var/lib/apt/lists/*
 
 # setup keys
@@ -24,8 +26,7 @@ apt-get update && apt-get install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
 # bootstrap rosdep
-RUN rosdep init \
-    && rosdep update
+rosdep init 
 
 # install ros packages
 apt-get update && apt-get install -y \
@@ -33,7 +34,8 @@ apt-get update && apt-get install -y \
 	ros-kinetic-turtlebot* \
     && rm -rf /var/lib/apt/lists/*
 
-#	ros-kinetic-desktop-full=1.3.2-0* \
+# ros-kinetic-desktop-full=1.3.2-0* \
+# ros-kinetic-turtlebot* \
 # setup entrypoint
 # COPY ./ros_entrypoint.sh /
 

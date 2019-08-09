@@ -8,12 +8,6 @@ RUN /opt/install/novnc.sh
 COPY ./setup/install/main_pkgs.sh /opt/install/
 RUN /opt/install/main_pkgs.sh
 
-ENV USER=rosuser \
-	HOME=/home/$USER
-	
-COPY ./setup/install/rosuser.sh /opt/install/
-RUN /opt/install/rosuser.sh
-
 # clean
 RUN apt-get autoclean && \
     apt-get autoremove 
@@ -28,15 +22,12 @@ RUN apt-get autoclean && \
 # add configuation files
 ADD ./setup/image /
 
-#wallpapers
-COPY ./setup/ui/wallpapers /opt/wallpapers
-#icewm ui
-COPY ./setup/ui/icewm $HOME/.icewm
-#jwm ui
-COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
-RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
 COPY ./setup/ui/jwm/jwm-session /opt/bin/
 RUN chmod a+x /opt/bin/jwm-session
+
+#wallpapers
+COPY ./setup/ui/wallpapers /opt/wallpapers
+
 
 # ROS master port
 EXPOSE 11311
@@ -44,15 +35,20 @@ EXPOSE 11311
 #noVNC port
 EXPOSE 6901
 
-USER $USER
+RUN chmod -Rf 777 /opt/log/
 
-WORKDIR $HOME
+USER $USER
 
 ENV SHELL=/bin/bash
 
-RUN rosdep fix-permissions && rosdep update
+WORKDIR $HOME
 
-RUN /opt/install/config.sh
+#icewm ui
+COPY ./setup/ui/icewm $HOME/.icewm
+#jwm ui
+COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
+RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
+
+USER root
 
 ENTRYPOINT ["/opt/bin/startup.sh"]
-

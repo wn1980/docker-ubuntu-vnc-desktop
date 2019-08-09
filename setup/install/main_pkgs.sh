@@ -19,7 +19,6 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     pluma \
     nano \
     htop \
-    lsb-release \
     usbutils \
     inetutils-ping \
     keyboard-configuration \
