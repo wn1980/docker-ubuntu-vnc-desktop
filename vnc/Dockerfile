@@ -8,6 +8,9 @@ RUN /opt/install/novnc.sh
 COPY ./setup/install/main_pkgs.sh /opt/install/
 RUN /opt/install/main_pkgs.sh
 
+ENV USER=rosuser \
+	HOME=/home/$USER
+	
 COPY ./setup/install/rosuser.sh /opt/install/
 RUN /opt/install/rosuser.sh
 
@@ -32,8 +35,8 @@ COPY ./setup/ui/icewm $HOME/.icewm
 #jwm ui
 COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
 RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
-COPY ./setup/ui/jwm/jwm-session /usr/bin/
-RUN chmod a+x /usr/bin/jwm-session
+COPY ./setup/ui/jwm/jwm-session /opt/bin/
+RUN chmod a+x /opt/bin/jwm-session
 
 # ROS master port
 EXPOSE 11311

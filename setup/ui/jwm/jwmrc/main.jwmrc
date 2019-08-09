@@ -163,7 +163,7 @@
               for that desktop.
          -->
         <Background type="solid">#111111</Background>
-	<Background type="image">/opt/wallpapers/robot1.jpg</Background>
+	<Background type="image">/opt/wallpapers/kinetic.jpg</Background>
     </Desktops>
 
     <!-- Double click speed (in milliseconds) -->
