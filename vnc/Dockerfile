@@ -49,6 +49,6 @@ COPY ./setup/ui/icewm $HOME/.icewm
 COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
 RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
 
-USER root
+#USER root
 
-ENTRYPOINT ["/opt/docker/bin/startup.sh"]
+#ENTRYPOINT ["/opt/docker/bin/startup.sh"]
