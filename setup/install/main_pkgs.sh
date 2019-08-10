@@ -21,6 +21,7 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     htop \
     usbutils \
     inetutils-ping \
+    net-tools \
     keyboard-configuration \
     xfonts-thai \
     && rm -rf /var/lib/apt/lists/*
