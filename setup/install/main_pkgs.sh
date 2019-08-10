@@ -22,9 +22,16 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     usbutils \
     inetutils-ping \
     net-tools \
+    alsa \
+    audacity \
+    portaudio19-dev \
+    python-pip \
+    python3-pip \
     keyboard-configuration \
     xfonts-thai \
     && rm -rf /var/lib/apt/lists/*
+
+pip install pyaudio pyusb click pixel-ring pydub gTTS
 
 #cp /usr/share/applications/terminator.desktop /root/Desktop
 
