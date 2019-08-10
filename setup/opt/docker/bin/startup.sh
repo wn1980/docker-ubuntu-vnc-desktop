@@ -2,17 +2,12 @@
 
 set -e
 
-#mkdir -p /var/run/sshd
-
-#chown -R root:root /root
-#mkdir -p /root/.config/pcmanfm/LXDE/
-#cp /usr/share/doro-lxde-wallpapers/desktop-items-0.conf /root/.config/pcmanfm/LXDE/
-
 if [ -n "$VNC_PASSWORD" ]; then
-    echo -n "$VNC_PASSWORD" > $HOME/.password1
-    x11vnc -storepasswd $(cat $HOME/.password1) $HOME/.password2
-    chmod 444 $HOME/.password*
-    sed -i 's/^command=x11vnc.*/& -rfbauth %(ENV_HOME)s\/.password2/' /opt/docker/supervisord.conf
+	mkdir -p "$HOME/.vnc"
+    echo -n "$VNC_PASSWORD" > $HOME/.vnc/password1
+    x11vnc -storepasswd $(cat $HOME/.vnc/password1) $HOME/.vnc/password2
+    chmod 444 $HOME/.vnc/password*
+    sed -i 's/^command=x11vnc.*/& -rfbauth %(ENV_HOME)s\/\.vnc\/password2/' /opt/docker/supervisord.conf
     export VNC_PASSWORD=
 fi
 
