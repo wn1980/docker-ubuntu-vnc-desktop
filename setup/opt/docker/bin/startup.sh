@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 #mkdir -p /var/run/sshd
 
 #chown -R root:root /root

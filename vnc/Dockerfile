@@ -2,11 +2,11 @@ ARG tag
 FROM wn1980/w-ros-kinetic${tag}
 
 # install packages
-COPY ./setup/install/novnc.sh /opt/install/
-RUN /opt/install/novnc.sh
+COPY ./setup/install/novnc.sh /opt/docker/install/
+RUN /opt/docker/install/novnc.sh
 
-COPY ./setup/install/main_pkgs.sh /opt/install/
-RUN /opt/install/main_pkgs.sh
+COPY ./setup/install/main_pkgs.sh /opt/docker/install/
+RUN /opt/docker/install/main_pkgs.sh
 
 # clean
 RUN apt-get autoclean && \
@@ -26,7 +26,7 @@ COPY ./setup/ui/jwm/jwm-session /opt/docker/bin/
 RUN chmod a+x /opt/docker/bin/jwm-session
 
 #wallpapers
-COPY ./setup/ui/wallpapers /opt/wallpapers
+COPY ./setup/ui/wallpapers /opt/docker/wallpapers
 
 
 # ROS master port

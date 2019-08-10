@@ -7,8 +7,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 	LC_ALL=C.UTF-8 \
 	ROS_DISTRO=kinetic
 
-COPY ./setup/install/ros.sh /opt/install/
-RUN /opt/install/ros.sh
+COPY ./setup/install/ros.sh /opt/docker/install/
+RUN /opt/docker/install/ros.sh
 
 # Configure user
 ARG user=rosuser
@@ -32,11 +32,11 @@ RUN groupadd $USER && \
     usermod  --uid $UID $USER && \
     groupmod --gid $GID $USER
     
-COPY ./setup/install/config.sh /opt/install/
+COPY ./setup/install/config.sh /opt/docker/install/
 
 USER $USER
 
-RUN /opt/install/config.sh
+RUN /opt/docker/install/config.sh
 
 RUN rosdep fix-permissions && rosdep update
 RUN /bin/bash -c "source ~/.bashrc"
