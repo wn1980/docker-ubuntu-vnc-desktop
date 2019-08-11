@@ -34,5 +34,5 @@ docker run -d --name $NAME \
 	-v /etc/localtime:/etc/localtime:ro \
 	-v ~/rosuser_home:$HOME:rw \
 	-e VNC_PASSWORD=vnc123 \
-	-e RESOLUTION=$p1080 \
+	-e RESOLUTION=$p169 \
 	wn1980/w-ros${tag}
