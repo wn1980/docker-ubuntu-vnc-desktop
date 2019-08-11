@@ -31,18 +31,26 @@ ENV src=$ws/src
 RUN mkdir -p $src
 
 RUN echo "\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
+RUN echo "#export GOOGLE_APPLICATION_CREDENTIALS=xxx\n" >> $HOME/.bashrc
 
-WORKDIR $src
+#WORKDIR $src
 
 # linorobot
-RUN git clone https://github.com/linorobot/linorobot && \
-	git clone https://github.com/linorobot/imu_calib && \
-	git clone https://github.com/linorobot/lino_pid && \
-	git clone https://github.com/linorobot/lino_udev && \
-	git clone https://github.com/linorobot/lino_msgs && \
-	git clone https://github.com/linorobot/lino_visualize && \
-	git clone https://github.com/linorobot/lino_setup && \
-	git clone https://github.com/EAIBOT/ydlidar -b 1.3.1
+#RUN git clone https://github.com/linorobot/linorobot && \
+#	git clone https://github.com/linorobot/imu_calib && \
+#	git clone https://github.com/linorobot/lino_pid && \
+#	git clone https://github.com/linorobot/lino_udev && \
+#	git clone https://github.com/linorobot/lino_msgs && \
+#	git clone https://github.com/linorobot/lino_visualize && \
+#	git clone https://github.com/linorobot/lino_setup && \
+#	git clone https://github.com/EAIBOT/ydlidar -b 1.3.1
+
+COPY ./setup/src.tar.gz $HOME
+
+WORKDIR $HOME
+
+RUN	tar -xzvf src.tar.gz -C $ws && \
+	rm -f src.tar.gz
 
 #RUN /bin/bash -c "source ~/.bashrc && cd $ws && catkin_make"
 

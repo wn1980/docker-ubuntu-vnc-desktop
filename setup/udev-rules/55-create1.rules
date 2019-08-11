@@ -1,0 +1,1 @@
+KERNEL=="ttyUSB?", SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", ATTRS{serial}=="A2001mRA", MODE="0666" SYMLINK+="create1"
