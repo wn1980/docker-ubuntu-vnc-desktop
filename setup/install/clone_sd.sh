@@ -7,4 +7,7 @@ if [ -z "$1" ]; then
 	exit 1
 fi
 
-dd bs=4M if="$1" | gzip > ubuntu18.04-docker-rpi-`date +%d%m%y`.img.gz
+name=ubuntu18.04-docker-rpi-`date +%d%m%y`.img.gz
+
+dd bs=4M if="$1" | gzip > $name
+chmod 666 $name
