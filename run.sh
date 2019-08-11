@@ -34,7 +34,8 @@ docker run -d --name $NAME \
 	-v /dev:/dev \
 	-v /run/systemd:/run/systemd \
 	-v /etc/localtime:/etc/localtime:ro \
-	-v ~/rosuser_home:$HOME:rw \
+	-v /tmp/.X11-unix:/tmp/.X11-unix \
+	-v ~/rosuser_home:$HOME \
 	-e VNC_PASSWORD=vnc123 \
-	-e RESOLUTION=$p169 \
+	-e VNC_RESOLUTION=$p169 \
 	wn1980/w-ros${tag}

@@ -3,8 +3,12 @@
 
     <!-- The root menu. -->
     <RootMenu onroot="12">
-        <Include>/etc/jwm/debian-menu</Include>
-        <Program icon="terminal.png" label="Terminal">xterm</Program>
+		<Program icon="xterm-color_48x48.xpm" label="Terminal">xterm</Program>
+        <Program icon="chromium-browser.png" label="Chrome">google-chrome</Program>
+        <Separator/>
+        <Include>/home/rosuser/.jwm/debian-menu</Include>
+        <Separator/>
+        <Include>/home/rosuser/.jwm/robot-menu</Include>
         <Separator/>
         <Program icon="lock.png" label="Lock">
             xlock -mode blank

@@ -8,6 +8,9 @@ RUN /opt/docker/install/novnc.sh
 COPY ./setup/install/main_pkgs.sh /opt/docker/install/
 RUN /opt/docker/install/main_pkgs.sh
 
+COPY ./setup/install/chrome.sh /opt/docker/install/
+RUN /opt/docker/install/chrome.sh
+
 # clean
 RUN apt-get autoclean && \
     apt-get autoremove 

@@ -1,0 +1,10 @@
+<JWM>
+<Menu label="Robots">
+	<Menu label="TurtleBot">
+		<Program label="bringup">/opt/docker/bin/turtlebot/bringup.sh</Program>
+	</Menu>
+	<Menu label="linorobot">
+		<Program label="bringup">/opt/docker/bin/linorobot/bringup.sh</Program>
+	</Menu>
+</Menu>
+</JWM>

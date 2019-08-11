@@ -11,8 +11,13 @@ if [ -n "$VNC_PASSWORD" ]; then
     export VNC_PASSWORD=
 fi
 
-if [ -n "$RESOLUTION" ]; then
-    sed -i "s/1024x768/$RESOLUTION/" /opt/docker/bin/xvfb.sh
+if [ -n "$VNC_RESOLUTION" ]; then
+    sed -i "s/1024x768/$VNC_RESOLUTION/" /opt/docker/bin/xvfb.sh
+else
+	export VNC_RESOLUTION=1024x768
 fi
 
+/opt/docker/bin/chrome-init.sh
+
+# the rest of alls
 exec /opt/docker/bin/tini-$(uname -m) -- /usr/bin/supervisord -n -c /opt/docker/supervisord.conf

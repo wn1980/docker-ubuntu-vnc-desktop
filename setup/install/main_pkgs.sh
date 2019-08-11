@@ -9,13 +9,15 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     x11vnc \
     xvfb \
     ttf-ubuntu-font-family \
-    firefox \
     build-essential \
-    mesa-utils \
+    libgl1-mesa-glx \
     libgl1-mesa-dri \
+    mesa-utils \
     dbus-x11 \
     x11-utils \
     xterm \
+    xauth \
+    xinit \
     pluma \
     nano \
     htop \
@@ -28,6 +30,7 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     python-pip \
     python3-pip \
     keyboard-configuration \
+    xfonts-base \
     xfonts-thai \
     && rm -rf /var/lib/apt/lists/*
 
