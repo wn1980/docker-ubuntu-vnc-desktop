@@ -42,23 +42,28 @@ RUN git clone https://github.com/linorobot/linorobot && \
 	git clone https://github.com/linorobot/lino_udev && \
 	git clone https://github.com/linorobot/lino_msgs && \
 	git clone https://github.com/linorobot/lino_visualize && \
-	git clone https://github.com/linorobot/lino_setup && \
-	git clone https://github.com/EAIBOT/ydlidar
+	git clone https://github.com/linorobot/lino_setup 
+	
+#&& \	git clone https://github.com/EAIBOT/ydlidar
 
 COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
 COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
 COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
 
 # copy src
-#COPY ./setup/src.tar.gz $HOME
+COPY ./setup/ydlidar-1.3.1.tar.gz $HOME
 
-#WORKDIR $HOME
+WORKDIR $HOME
 
-#RUN	tar -xzvf src.tar.gz -C $ws && \
-#	rm -f src.tar.gz
+RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src && \
+	rm -f ydlidar-1.3.1.tar.gz
 
 #RUN /bin/bash -c "source ~/.bashrc && cd $ws && catkin_make"
 
 USER root
+
+RUN apt-get update && apt-get install -y \
+	ros-$ROS_DISTRO-teleop-twist-keyboard \
+	ros-$ROS_DISTRO-teleop-twist-joy
 
 ENTRYPOINT ["/opt/docker/bin/startup.sh"]
