@@ -45,6 +45,10 @@ RUN git clone https://github.com/linorobot/linorobot && \
 	git clone https://github.com/linorobot/lino_setup && \
 	git clone https://github.com/EAIBOT/ydlidar
 
+COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
+COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
+COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
+
 # copy src
 #COPY ./setup/src.tar.gz $HOME
 
