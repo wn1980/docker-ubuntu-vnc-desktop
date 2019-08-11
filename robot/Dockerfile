@@ -43,7 +43,7 @@ RUN git clone https://github.com/linorobot/linorobot && \
 	git clone https://github.com/linorobot/lino_msgs && \
 	git clone https://github.com/linorobot/lino_visualize && \
 	git clone https://github.com/linorobot/lino_setup && \
-	git clone https://github.com/EAIBOT/ydlidar -b 1.3.1
+	git clone https://github.com/EAIBOT/ydlidar
 
 # copy src
 #COPY ./setup/src.tar.gz $HOME
