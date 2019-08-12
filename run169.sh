@@ -35,5 +35,5 @@ docker run -d --name $NAME \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v ~/rosuser_home:$HOME \
 	-e VNC_PASSWORD=vnc123 \
-	-e VNC_RESOLUTION=$p1080 \
+	-e VNC_RESOLUTION=$p169 \
 	wn1980/w-ros${tag}
