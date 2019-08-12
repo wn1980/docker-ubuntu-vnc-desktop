@@ -5,4 +5,4 @@ xrdb -load $HOME/.Xresources
 #x-terminal-emulator -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
 #x-window-manager &
 
-exec /usr/bin/jwm
+exec /usr/bin/jwm -display :1
