@@ -24,11 +24,13 @@ RUN apt-get update && apt-get install -y \
 	ros-$ROS_DISTRO-teleop-twist-joy
 
 # custom packages
-RUN apt-get --reinstall install -y \
-	python-pyasn1 \
-	python-pyasn1-modules 
-	
-RUN pip install pyaudio pyusb click pixel-ring pydub dialogflow==0.3.0 gTTS
+#RUN apt-get --reinstall install -y \
+#	python-pyasn1 \
+#	python-pyasn1-modules 
+
+RUN pip install --upgrade pyasn1 && pip install --upgrade pyasn1-modules
+
+RUN pip install pyaudio pyusb click pixel-ring pydub dialogflow==0.6.0 gTTS
 
 # create workspace
 USER $USER
