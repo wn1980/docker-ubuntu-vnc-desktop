@@ -20,7 +20,7 @@ COPY ./setup/opt /opt
 
 ENV PATH="/opt/docker/bin:${PATH}"
 
-RUN /opt/docker/bin/set_user_permission.sh /opt/docker $HOME
+RUN set_user_permission.sh /opt/docker $HOME
 
 # tini for subreap
 #ARG TINI_VERSION=v0.18.0
@@ -45,7 +45,7 @@ RUN chmod a+x /opt/docker/bin/jwm-session
 #wallpapers
 COPY ./setup/ui/wallpapers /opt/docker/wallpapers
 
-#nornal VNC port
+# normal VNC port
 EXPOSE 5901
 
 #noVNC port

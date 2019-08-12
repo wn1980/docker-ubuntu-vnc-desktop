@@ -26,12 +26,9 @@ RUN apt-get update && apt-get install -y \
 # custom packages
 RUN apt-get --reinstall install -y \
 	python-pyasn1 \
-	python-pyasn1-modules
+	python-pyasn1-modules 
 	
 RUN pip install pyaudio pyusb click pixel-ring pydub gTTS dialogflow==0.3.0
-
-# ROS master port
-EXPOSE 11311
 
 # create workspace
 USER $USER
@@ -41,7 +38,7 @@ ENV src=$ws/src
 RUN mkdir -p $src
 
 RUN echo "\n#workspace setting\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
-RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS=xxx\n" >> $HOME/.bashrc
+RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS='$HOME/path/file.json'\n" >> $HOME/.bashrc
 
 # linorobot
 WORKDIR $src
@@ -51,14 +48,12 @@ RUN git clone https://github.com/linorobot/linorobot && \
 	git clone https://github.com/linorobot/lino_pid && \
 	git clone https://github.com/linorobot/lino_udev && \
 	git clone https://github.com/linorobot/lino_msgs && \
-	git clone https://github.com/linorobot/lino_visualize && \
-	git clone https://github.com/linorobot/lino_setup 
-	
-#&& \	git clone https://github.com/EAIBOT/ydlidar
+	git clone https://github.com/linorobot/lino_visualize
 
 COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
 COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
 COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
+COPY ./setup/asoundrc.txt $HOME/.asoundrc
 
 # copy ydlidar to src
 WORKDIR /opt
@@ -73,6 +68,11 @@ RUN rm -f ydlidar-1.3.1.tar.gz
 
 RUN usermod -aG audio $USER && \
 	usermod -aG video $USER && \
-	usermod -aG dialout $USER
+	usermod -aG dialout $USER   
+
+# ROS master port
+EXPOSE 11311
+
+WORKDIR $HOME
 
 #ENTRYPOINT ["/opt/docker/bin/startup.sh"]
