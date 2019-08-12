@@ -36,4 +36,4 @@ docker run -d --name $NAME \
 	-v ~/rosuser_home:$HOME \
 	-e VNC_PASSWORD=vnc123 \
 	-e VNC_RESOLUTION=$p169 \
-	wn1980/w-ros${tag}
+	wn1980/w-ros${tag} startup.sh

@@ -30,7 +30,7 @@ RUN apt-get --reinstall install -y \
 	python-pyasn1 \
 	python-pyasn1-modules
 	
-RUN pip install pyaudio pyusb click pixel-ring pydub gTTS dialogflow==0.1.0
+RUN pip install pyaudio pyusb click pixel-ring pydub gTTS dialogflow==0.3.0
 
 # create workspace
 USER $USER
@@ -64,10 +64,14 @@ WORKDIR /opt
 
 RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src 
 
-#&& \	rm -f ydlidar-1.3.1.tar.gz
-
 #RUN /bin/bash -c "source ~/.bashrc && cd $ws && catkin_make"
 
 USER root
 
-ENTRYPOINT ["/opt/docker/bin/startup.sh"]
+RUN rm -f ydlidar-1.3.1.tar.gz
+
+RUN usermod -aG audio video dialout $USER
+
+ENV PATH="/opt/docker/bin:${PATH}"
+
+#ENTRYPOINT ["/opt/docker/bin/startup.sh"]
