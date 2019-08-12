@@ -2,14 +2,6 @@
 
 set -e
 
-apt-get update && apt-get install --no-install-recommends  -y \
-    software-properties-common \
-    curl \
-    wget 
-    #&& sh -c "echo 'deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' >> /etc/apt/sources.list.d/arc-theme.list" \
-    #&& curl -SL http://download.opensuse.org/repositories/home:Horst3180/xUbuntu_16.04/Release.key | apt-key add - \
-    #&& add-apt-repository ppa:fcwu-tw/ppa 
-
 ### Install noVNC - HTML5 based VNC viewer (noVNC v1.1.0 & websockify v0.8.0)
 export NO_VNC_HOME=/opt/noVNC
 mkdir -p $NO_VNC_HOME/utils/websockify

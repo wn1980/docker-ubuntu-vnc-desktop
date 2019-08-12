@@ -21,7 +21,16 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-lms1xx \
     ros-$ROS_DISTRO-freenect-launch \
     ros-$ROS_DISTRO-depthimage-to-laserscan \
-    ros-$ROS_DISTRO-teb-local-planner
+    ros-$ROS_DISTRO-teb-local-planner \
+    ros-$ROS_DISTRO-teleop-twist-keyboard \
+	ros-$ROS_DISTRO-teleop-twist-joy
+
+# custom packages
+RUN apt-get --reinstall install -y \
+	python-pyasn1 \
+	python-pyasn1-modules
+	
+RUN pip install pyaudio pyusb click pixel-ring pydub gTTS dialogflow==0.1.0
 
 # create workspace
 USER $USER
@@ -30,8 +39,8 @@ ENV ws=$HOME/catkin_ws
 ENV src=$ws/src
 RUN mkdir -p $src
 
-RUN echo "\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
-RUN echo "#export GOOGLE_APPLICATION_CREDENTIALS=xxx\n" >> $HOME/.bashrc
+RUN echo "\n#workspace setting\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
+RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS=xxx\n" >> $HOME/.bashrc
 
 # linorobot
 WORKDIR $src
@@ -50,20 +59,15 @@ COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
 COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
 COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
 
-# copy src
-COPY ./setup/ydlidar-1.3.1.tar.gz $HOME
+# copy ydlidar to src
+WORKDIR /opt
 
-WORKDIR $HOME
+RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src 
 
-RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src && \
-	rm -f ydlidar-1.3.1.tar.gz
+#&& \	rm -f ydlidar-1.3.1.tar.gz
 
 #RUN /bin/bash -c "source ~/.bashrc && cd $ws && catkin_make"
 
 USER root
-
-RUN apt-get update && apt-get install -y \
-	ros-$ROS_DISTRO-teleop-twist-keyboard \
-	ros-$ROS_DISTRO-teleop-twist-joy
 
 ENTRYPOINT ["/opt/docker/bin/startup.sh"]

@@ -3,6 +3,9 @@
 set -e
     
 apt-get update && apt-get install --no-install-recommends --allow-unauthenticated -y \
+    software-properties-common \
+    curl \
+    wget \
 	supervisor \
     icewm \
     jwm \
@@ -34,13 +37,10 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     xfonts-thai \
     && rm -rf /var/lib/apt/lists/*
 
-pip install pyaudio pyusb click pixel-ring pydub gTTS
-
 #cp /usr/share/applications/terminator.desktop /root/Desktop
 
    	#openssh-server \
     #nginx \
-    #python-pip python-dev \
     #arc-theme \
     #okular \
     #pinta \
@@ -49,7 +49,6 @@ pip install pyaudio pyusb click pixel-ring pydub gTTS
     #gtk2-engines-murrine \
     #gnome-themes-standard \
     #terminator \
-    #net-tools \
     #lxde \
     #pwgen \
     #vim-tiny \
