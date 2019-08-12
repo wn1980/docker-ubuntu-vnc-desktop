@@ -18,16 +18,18 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     mesa-utils \
     dbus-x11 \
     x11-utils \
+    x11-apps \
     xterm \
     xauth \
     xinit \
-    pluma \
+    geany \
     nano \
     htop \
     usbutils \
     inetutils-ping \
     net-tools \
     alsa \
+    alsa-utils \
     audacity \
     portaudio19-dev \
     python-pip \

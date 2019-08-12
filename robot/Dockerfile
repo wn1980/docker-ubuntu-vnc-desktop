@@ -1,8 +1,6 @@
 ARG tag
 FROM wn1980/w-ros-novnc${tag}
 
-USER root
-
 # required for linorobot
 RUN apt-get update && apt-get install -y \
 	ros-$ROS_DISTRO-roslint \
@@ -31,6 +29,9 @@ RUN apt-get --reinstall install -y \
 	python-pyasn1-modules
 	
 RUN pip install pyaudio pyusb click pixel-ring pydub gTTS dialogflow==0.3.0
+
+# ROS master port
+EXPOSE 11311
 
 # create workspace
 USER $USER
@@ -70,8 +71,8 @@ USER root
 
 RUN rm -f ydlidar-1.3.1.tar.gz
 
-RUN usermod -aG audio video dialout $USER
-
-ENV PATH="/opt/docker/bin:${PATH}"
+RUN usermod -aG audio $USER && \
+	usermod -aG video $USER && \
+	usermod -aG dialout $USER
 
 #ENTRYPOINT ["/opt/docker/bin/startup.sh"]

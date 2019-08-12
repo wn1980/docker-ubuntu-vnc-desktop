@@ -20,4 +20,4 @@ fi
 /opt/docker/bin/chrome-init.sh
 
 # the rest of alls
-exec /opt/docker/bin/tini-$(uname -m) -- /usr/bin/supervisord -n -c /opt/docker/supervisord.conf
+exec /opt/docker/bin/tini-$(uname -m) -- /usr/bin/supervisord -n -c /opt/docker/custom-supervisord.conf

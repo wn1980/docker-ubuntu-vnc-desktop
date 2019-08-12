@@ -18,6 +18,10 @@ RUN apt-get autoclean && \
 # add configuation files
 COPY ./setup/opt /opt
 
+ENV PATH="/opt/docker/bin:${PATH}"
+
+RUN /opt/docker/bin/set_user_permission.sh /opt/docker $HOME
+
 # tini for subreap
 #ARG TINI_VERSION=v0.18.0
 #ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini-amd64 /bin/tini-x86_64
@@ -41,8 +45,8 @@ RUN chmod a+x /opt/docker/bin/jwm-session
 #wallpapers
 COPY ./setup/ui/wallpapers /opt/docker/wallpapers
 
-# ROS master port
-EXPOSE 11311
+#nornal VNC port
+EXPOSE 5901
 
 #noVNC port
 EXPOSE 6901
@@ -61,6 +65,6 @@ COPY ./setup/ui/icewm $HOME/.icewm
 COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
 RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
 
-#USER root
+USER root
 
 #ENTRYPOINT ["/opt/docker/bin/startup.sh"]
