@@ -28,7 +28,7 @@ RUN apt-get --reinstall install -y \
 	python-pyasn1 \
 	python-pyasn1-modules 
 	
-RUN pip install pyaudio pyusb click pixel-ring pydub gTTS dialogflow==0.3.0
+RUN pip install pyaudio pyusb click pixel-ring pydub dialogflow==0.3.0 gTTS
 
 # create workspace
 USER $USER

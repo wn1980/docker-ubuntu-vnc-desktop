@@ -16,6 +16,7 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     libgl1-mesa-glx \
     libgl1-mesa-dri \
     mesa-utils \
+    ffmpeg \
     dbus-x11 \
     x11-utils \
     x11-apps \
