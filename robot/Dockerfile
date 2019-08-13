@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --upgrade pyasn1 && pip install --upgrade pyasn1-modules
 
-RUN pip install pyaudio pyusb click pixel-ring pydub dialogflow==0.6.0 gTTS
+RUN pip install pyaudio pyusb click pixel-ring pydub beautifulsoup4 gTTS-token dialogflow==0.6.0 gTTS==2.0.3 
 
 # create workspace
 USER $USER
