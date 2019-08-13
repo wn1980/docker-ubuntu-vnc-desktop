@@ -28,7 +28,10 @@ RUN apt-get update && apt-get install -y \
 #	python-pyasn1 \
 #	python-pyasn1-modules 
 
-RUN pip install --upgrade pyasn1 && pip install --upgrade pyasn1-modules
+RUN pip install --upgrade pyasn1 && \
+	pip install --upgrade pyasn1-modules && \
+	pip install --upgrade cryptography && \
+	python -m easy_install --upgrade pyOpenSSL
 
 RUN pip install pyaudio pyusb click pixel-ring pydub beautifulsoup4 gTTS-token dialogflow==0.6.0 gTTS==2.0.3 
 
