@@ -24,7 +24,9 @@ RUN apt-get update && apt-get install -y \
 	ros-$ROS_DISTRO-teleop-twist-joy
 
 # custom packages
-#RUN apt-get --reinstall install -y \
+RUN apt-get --reinstall install -y \
+	libffi-dev
+	
 #	python-pyasn1 \
 #	python-pyasn1-modules 
 
