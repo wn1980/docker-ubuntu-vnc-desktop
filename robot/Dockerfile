@@ -24,18 +24,16 @@ RUN apt-get update && apt-get install -y \
 	ros-$ROS_DISTRO-teleop-twist-joy
 
 # custom packages
-RUN apt-get --reinstall install -y \
+RUN apt-get install -y \
 	libffi-dev
-	
-#	python-pyasn1 \
-#	python-pyasn1-modules 
 
+# update required modules	
 RUN pip install --upgrade pyasn1 && \
 	pip install --upgrade pyasn1-modules && \
 	pip install --upgrade cryptography && \
 	python -m easy_install --upgrade pyOpenSSL
 
-RUN pip install pyaudio pyusb click pixel-ring pydub beautifulsoup4 gTTS-token dialogflow==0.6.0 gTTS==2.0.3 
+RUN pip install pyaudio pyusb click pixel-ring spidev pydub beautifulsoup4 gTTS-token dialogflow==0.6.0 gTTS==2.0.3 
 
 # create workspace
 USER $USER
@@ -67,7 +65,7 @@ WORKDIR /opt
 
 RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src 
 
-#RUN /bin/bash -c "source ~/.bashrc && cd $ws && catkin_make"
+RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && cd $ws && catkin_make"
 
 USER root
 
@@ -75,8 +73,8 @@ RUN rm -f ydlidar-1.3.1.tar.gz
 
 RUN usermod -aG audio $USER && \
 	usermod -aG video $USER && \
-	usermod -aG dialout $USER   
-
+	usermod -aG dialout $USER  
+	 
 # ROS master port
 EXPOSE 11311
 
