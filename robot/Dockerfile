@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-freenect-launch \
     ros-$ROS_DISTRO-depthimage-to-laserscan \
     ros-$ROS_DISTRO-teb-local-planner \
+    ros-$ROS_DISTRO-usb-cam \
     ros-$ROS_DISTRO-teleop-twist-keyboard \
 	ros-$ROS_DISTRO-teleop-twist-joy
 
