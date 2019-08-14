@@ -1,0 +1,4 @@
+# ATTR{product}=="Kinect2"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02c4", GROUP="video", MODE="0664"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02d8", GROUP="video", MODE="0664"
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="045e", ATTRS{idProduct}=="02d9", GROUP="video", MODE="0664"

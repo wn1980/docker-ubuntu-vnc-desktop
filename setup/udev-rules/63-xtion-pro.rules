@@ -1,0 +1,2 @@
+# ASUS xtion pro live
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="1d27", ATTRS{idProduct}=="0601", GROUP="video", MODE="0664"
