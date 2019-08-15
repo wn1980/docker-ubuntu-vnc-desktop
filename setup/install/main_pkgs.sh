@@ -40,5 +40,7 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     ttf-ubuntu-font-family \
     xfonts-base \
     xfonts-thai \
+    git-cola \
+    tk \
     && rm -rf /var/lib/apt/lists/*
     

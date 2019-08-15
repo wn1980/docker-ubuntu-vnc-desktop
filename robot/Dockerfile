@@ -49,16 +49,17 @@ RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS='$
 # linorobot
 WORKDIR $src
 
-RUN git clone https://github.com/linorobot/linorobot && \
+RUN git clone https://github.com/wn1980/linorobot && \
+	git clone https://github.com/wn1980/turtlebot_lidar && \
 	git clone https://github.com/linorobot/imu_calib && \
 	git clone https://github.com/linorobot/lino_pid && \
 	git clone https://github.com/linorobot/lino_udev && \
 	git clone https://github.com/linorobot/lino_msgs && \
 	git clone https://github.com/linorobot/lino_visualize
 
-COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
-COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
-COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
+#COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
+#COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
+#COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
 COPY ./setup/asoundrc.txt $HOME/.asoundrc
 
 # copy ydlidar to src
