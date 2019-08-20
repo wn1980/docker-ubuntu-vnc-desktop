@@ -24,11 +24,12 @@ RUN apt-get update && apt-get install -y \
     ros-$ROS_DISTRO-explore-lite \
     ros-$ROS_DISTRO-usb-cam \
     ros-$ROS_DISTRO-teleop-twist-keyboard \
-	ros-$ROS_DISTRO-teleop-twist-joy
+	ros-$ROS_DISTRO-teleop-twist-joy 
 
 # custom packages
 RUN apt-get install -y \
-	libffi-dev
+	libffi-dev \
+	libqt5serialport5-dev
 
 # update required modules	
 RUN pip install --upgrade pyasn1 && \
@@ -51,13 +52,17 @@ RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS='$
 # linorobot
 WORKDIR $src
 
-RUN git clone https://github.com/wn1980/linorobot && \
-	git clone https://github.com/wn1980/turtlebot_lidar && \
-	git clone https://github.com/linorobot/imu_calib && \
+RUN git clone https://github.com/linorobot/lino_msgs && \
 	git clone https://github.com/linorobot/lino_pid && \
 	git clone https://github.com/linorobot/lino_udev && \
-	git clone https://github.com/linorobot/lino_msgs && \
-	git clone https://github.com/linorobot/lino_visualize
+	git clone https://github.com/linorobot/imu_calib && \
+	git clone https://github.com/linorobot/lino_visualize && \
+	git clone https://github.com/wn1980/linorobot && \
+	git clone https://github.com/wn1980/turtlebot_lidar 
+
+RUN git clone https://github.com/wn1980/dobot
+# or
+#RUN git clone https://github.com/wn1980/ros-dobot
 
 #COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
 #COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
