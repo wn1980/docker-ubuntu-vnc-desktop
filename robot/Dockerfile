@@ -64,6 +64,8 @@ RUN git clone https://github.com/wn1980/dobot
 # or
 #RUN git clone https://github.com/wn1980/ros-dobot
 
+RUN git clone --recursive https://github.com/leggedrobotics/darknet_ros.git
+
 #COPY ./setup/linorobot/keyboard_teleop.launch $src/linorobot/launch/
 #COPY ./setup/linorobot/webcam.launch $src/linorobot/launch/
 #COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
@@ -74,7 +76,7 @@ WORKDIR /opt
 
 RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src 
 
-RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && cd $ws && catkin_make"
+RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && cd $ws && catkin_make -DCMAKE_BUILD_TYPE=Release"
 
 USER root
 
