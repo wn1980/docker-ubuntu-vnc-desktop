@@ -42,5 +42,6 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     xfonts-thai \
     git-cola \
     tk \
+    kazam \
     && rm -rf /var/lib/apt/lists/*
     
