@@ -1,30 +1,8 @@
 ARG tag
 FROM wn1980/w-ros-novnc${tag}
 
-# required for linorobot
-RUN apt-get update && apt-get install -y \
-	ros-$ROS_DISTRO-roslint \
-	ros-$ROS_DISTRO-rosserial \
-	ros-$ROS_DISTRO-rosserial-arduino \
-	ros-$ROS_DISTRO-imu-filter-madgwick \
-	ros-$ROS_DISTRO-gmapping \
-	ros-$ROS_DISTRO-map-server \
-	ros-$ROS_DISTRO-robot-localization \
-	ros-$ROS_DISTRO-tf \
-	ros-$ROS_DISTRO-tf2 \
-	ros-$ROS_DISTRO-tf2-ros \
-    ros-$ROS_DISTRO-xv-11-laser-driver \
-    ros-$ROS_DISTRO-rplidar-ros \
-    ros-$ROS_DISTRO-urg-node \
-    ros-$ROS_DISTRO-lms1xx \
-    ros-$ROS_DISTRO-freenect-launch \
-    ros-$ROS_DISTRO-depthimage-to-laserscan \
-    ros-$ROS_DISTRO-teb-local-planner \
-    ros-$ROS_DISTRO-multirobot-map-merge \
-    ros-$ROS_DISTRO-explore-lite \
-    ros-$ROS_DISTRO-usb-cam \
-    ros-$ROS_DISTRO-teleop-twist-keyboard \
-	ros-$ROS_DISTRO-teleop-twist-joy 
+COPY ./setup/install/ros_pkgs.sh /opt/docker/install/
+RUN /opt/docker/install/ros_pkgs.sh
 
 # custom packages
 RUN apt-get install -y \
@@ -80,18 +58,17 @@ RUN	tar -xzvf ydlidar-1.3.1.tar.gz -C $src
 #COPY ./setup/linorobot/ydlidar.launch $src/linorobot/launch/include/lidar
 COPY ./setup/asoundrc.txt $HOME/.asoundrc
 
-USER root
-
-RUN rm -f ydlidar-1.3.1.tar.gz
-
-RUN bash $src/rbx1/rbx1-prereq.sh && \
-	bash $src/rbx2/rbx2-prereq.sh
+#USER root
+#RUN bash $src/rbx1/rbx1-prereq.sh && \
+#	bash $src/rbx2/rbx2-prereq.sh
 
 USER $USER
 
 RUN /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash && cd $ws && catkin_make -DCMAKE_BUILD_TYPE=Release"
 
 USER root
+
+RUN rm -f ydlidar-1.3.1.tar.gz
 
 RUN usermod -aG audio $USER && \
 	usermod -aG video $USER && \
