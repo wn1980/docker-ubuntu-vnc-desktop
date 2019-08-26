@@ -4,14 +4,24 @@
     <!-- The root menu. -->
     <RootMenu onroot="12">
 		<Program icon="xterm-color_48x48.xpm" label="Terminal">xterm</Program>
-        <Program icon="chromium-browser.png" label="Chrome">google-chrome</Program>
-        <Program icon="geany.xpm" label="Geany">geany</Program>
-        <Program icon="kazam.png" label="Kazam">kazam</Program>
-        <Separator/>
+		<Separator/>
+
+        <Menu label="Tools">
+			<Program icon="xfe.xpm" label="File">xfe</Program>
+			<Program icon="chromium-browser.png" label="Chrome">google-chrome</Program>
+			<Program icon="geany.xpm" label="Geany">geany</Program>
+			<Program icon="kazam.png" label="Kazam">kazam</Program>
+		</Menu>
+		<Separator/>
+		
+		<Menu label="Robots">
+			<Program label="bringup">/opt/docker/bin/turtlebot/bringup.sh</Program>
+		</Menu>
+		<Separator/>
+		
         <Include>/home/rosuser/.jwm/debian-menu</Include>
         <Separator/>
-        <Include>/home/rosuser/.jwm/robot-menu</Include>
-        <Separator/>
+
         <Program icon="lock.png" label="Lock">
             xlock -mode blank
         </Program>

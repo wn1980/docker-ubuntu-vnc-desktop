@@ -18,6 +18,7 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     dbus-x11 \
     x11-utils \
     x11-apps \
+    xfe \
     xterm \
     xauth \
     xinit \
