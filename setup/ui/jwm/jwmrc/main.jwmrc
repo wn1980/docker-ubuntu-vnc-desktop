@@ -10,12 +10,13 @@
 			<Program icon="xfe.xpm" label="File">xfe</Program>
 			<Program icon="chromium-browser.png" label="Chrome">google-chrome</Program>
 			<Program icon="geany.xpm" label="Geany">geany</Program>
+			<Program icon="htop.png" label="htop">x-terminal-emulator -T &quot;HTOP&quot; -e htop</Program>
 			<Program icon="kazam.png" label="Kazam">kazam</Program>
 		</Menu>
 		<Separator/>
 		
 		<Menu label="Robots">
-			<Program label="bringup">/opt/docker/bin/turtlebot/bringup.sh</Program>
+			<Program label="bringup">x-terminal-emulator -e sh -c &quot;/opt/docker/bin/turtlebot/bringup.sh&quot;</Program>
 		</Menu>
 		<Separator/>
 		
