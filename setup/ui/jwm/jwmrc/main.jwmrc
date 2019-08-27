@@ -11,17 +11,23 @@
 			<Program icon="chromium-browser.png" label="Chrome">google-chrome</Program>
 			<Program icon="geany.xpm" label="Geany">geany</Program>
 			<Program icon="htop.png" label="htop">x-terminal-emulator -T &quot;HTOP&quot; -e htop</Program>
+			<Program icon="audacity.png" label="Audacity">audacity</Program>
 			<Program icon="kazam.png" label="Kazam">kazam</Program>
+			<Program icon="kazam-window.png" label="git-cola">git-cola</Program>
 		</Menu>
 		<Separator/>
 		
 		<Menu label="Robots">
-			<Program label="bringup">x-terminal-emulator -e sh -c &quot;/opt/docker/bin/turtlebot/bringup.sh&quot;</Program>
+			<Menu label="TurtleBot">
+				<Program label="bringup">x-terminal-emulator -e bash -c &quot;/opt/docker/bin/turtlebot/bringup.sh&quot;</Program>
+			</Menu>
 		</Menu>
 		<Separator/>
 		
+		<!--
         <Include>/home/rosuser/.jwm/debian-menu</Include>
         <Separator/>
+        -->
 
         <Program icon="lock.png" label="Lock">
             xlock -mode blank
