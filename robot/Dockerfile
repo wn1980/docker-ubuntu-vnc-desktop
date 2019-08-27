@@ -36,17 +36,17 @@ RUN git clone https://github.com/linorobot/lino_msgs && \
 	git clone https://github.com/linorobot/imu_calib && \
 	git clone https://github.com/linorobot/lino_visualize && \
 	git clone https://github.com/wn1980/linorobot && \
-	git clone https://github.com/wn1980/turtlebot_lidar 
-
-RUN git clone https://github.com/wn1980/dobot
+	git clone https://github.com/wn1980/turtlebot_lidar && \
+	git clone https://github.com/wn1980/rbx1 && \
+	git clone https://github.com/wn1980/rbx2 && \
+	git clone https://github.com/wn1980/pi_trees && \
+	git clone https://github.com/wn1980/dobot
+	
+#	git clone https://github.com/wn1980/turtlebot_6wd && \
 # or
 #RUN git clone https://github.com/wn1980/ros-dobot
 
 RUN git clone --recursive https://github.com/leggedrobotics/darknet_ros.git
-
-RUN	git clone https://github.com/wn1980/rbx1 && \
-	git clone https://github.com/wn1980/rbx2 && \
-	git clone https://github.com/wn1980/pi_trees 
 
 # copy ydlidar to src
 WORKDIR /opt
@@ -72,7 +72,8 @@ RUN rm -f ydlidar-1.3.1.tar.gz
 
 RUN usermod -aG audio $USER && \
 	usermod -aG video $USER && \
-	usermod -aG dialout $USER  
+	usermod -aG dialout $USER  && \
+	usermod -aG plugdev $USER 
 	 
 # ROS master port
 EXPOSE 11311
