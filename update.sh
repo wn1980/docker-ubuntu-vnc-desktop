@@ -11,6 +11,8 @@ else
 	exit 0
 fi
 
+docker system prune -f
+
 docker pull wn1980/w-ros${tag}
 
 ./run.sh

@@ -37,16 +37,17 @@ RUN git clone https://github.com/linorobot/lino_msgs && \
 	git clone https://github.com/linorobot/lino_visualize && \
 	git clone https://github.com/wn1980/linorobot && \
 	git clone https://github.com/wn1980/turtlebot_lidar && \
+	git clone https://github.com/wn1980/rf2o_laser_odometry && \
 	git clone https://github.com/wn1980/rbx1 && \
 	git clone https://github.com/wn1980/rbx2 && \
 	git clone https://github.com/wn1980/pi_trees && \
-	git clone https://github.com/wn1980/dobot
-	
-#	git clone https://github.com/wn1980/turtlebot_6wd && \
+	git clone https://github.com/wn1980/dobot 
+
+#	git clone https://github.com/wn1980/turtlebot_6wd && \	
 # or
 #RUN git clone https://github.com/wn1980/ros-dobot
 
-RUN git clone --recursive https://github.com/leggedrobotics/darknet_ros.git
+RUN git clone --recursive https://github.com/leggedrobotics/darknet_ros
 
 # copy ydlidar to src
 WORKDIR /opt

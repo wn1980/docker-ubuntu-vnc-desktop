@@ -25,6 +25,8 @@ NAME=w-ros-daemon
 
 docker rm -f $NAME
 
+docker system prune -f
+
 docker run -d --name $NAME --gpus all \
 	--network host \
 	--privileged \
