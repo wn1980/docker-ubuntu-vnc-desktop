@@ -77,3 +77,9 @@ EXPOSE 11311
 WORKDIR $HOME
 
 #ENTRYPOINT ["/opt/docker/bin/startup.sh"]
+
+RUN apt-get update && apt-get install -y \
+	nginx \
+	mysql-server \
+	php-fpm \
+	php-mysql
