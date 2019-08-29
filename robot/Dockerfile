@@ -30,12 +30,7 @@ RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS='$
 # linorobot
 WORKDIR $src
 
-RUN git clone https://github.com/linorobot/lino_msgs && \
-	git clone https://github.com/linorobot/lino_pid && \
-	git clone https://github.com/linorobot/lino_udev && \
-	git clone https://github.com/linorobot/imu_calib && \
-	git clone https://github.com/linorobot/lino_visualize && \
-	git clone https://github.com/wn1980/linorobot && \
+RUN git clone https://github.com/wn1980/linorobot_pkgs && \
 	git clone https://github.com/wn1980/turtlebot_lidar && \
 	git clone https://github.com/wn1980/rf2o_laser_odometry && \
 	git clone https://github.com/wn1980/rbx1 && \
