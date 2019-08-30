@@ -48,6 +48,12 @@ RUN chmod a+x /opt/docker/bin/jwm-session
 #wallpapers
 COPY ./setup/ui/wallpapers /opt/docker/wallpapers
 
+#nginx
+COPY ./setup/sites-available-default /etc/nginx/sites-available/default
+
+# http web
+EXPOSE 80
+
 # normal VNC port
 EXPOSE 5901
 

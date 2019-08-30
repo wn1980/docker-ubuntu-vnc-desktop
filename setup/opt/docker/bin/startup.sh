@@ -17,7 +17,11 @@ else
 	export VNC_RESOLUTION=1024x768
 fi
 
+# Chrome browser
 /opt/docker/bin/chrome-init.sh
+
+# nginx web server
+/usr/sbin/nginx
 
 # the rest of alls
 exec /opt/docker/bin/tini-$(uname -m) -- /usr/bin/supervisord -n -c /opt/docker/custom-supervisord.conf
