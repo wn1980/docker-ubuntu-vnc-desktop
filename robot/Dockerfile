@@ -72,7 +72,6 @@ RUN usermod -aG audio $USER && \
 	usermod -aG plugdev $USER 
 
 RUN service apache2 stop && \
-	service apache2 disable && \
 	apt-get purge apache2* && \
 	rm -rf /etc/apache2
 	 
