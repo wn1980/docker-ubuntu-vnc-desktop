@@ -21,7 +21,7 @@ fi
 /opt/docker/bin/chrome-init.sh
 
 # nginx web server
-/usr/sbin/nginx
+#/usr/sbin/nginx
 
 # the rest of alls
 exec /opt/docker/bin/tini-$(uname -m) -- /usr/bin/supervisord -n -c /opt/docker/custom-supervisord.conf

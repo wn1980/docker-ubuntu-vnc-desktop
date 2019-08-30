@@ -71,9 +71,8 @@ RUN usermod -aG audio $USER && \
 	usermod -aG dialout $USER  && \
 	usermod -aG plugdev $USER 
 
-RUN service apache2 stop && \
-	apt-get purge apache2* && \
-	rm -rf /etc/apache2
+#RUN apt-get purge -y apache2* && \
+#	rm -rf /etc/apache2
 	 
 # ROS master port
 EXPOSE 11311

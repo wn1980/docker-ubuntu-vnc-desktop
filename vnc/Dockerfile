@@ -49,7 +49,7 @@ RUN chmod a+x /opt/docker/bin/jwm-session
 COPY ./setup/ui/wallpapers /opt/docker/wallpapers
 
 #nginx
-COPY ./setup/sites-available-default /etc/nginx/sites-available/default
+#COPY ./setup/sites-available-default /etc/nginx/sites-available/default
 
 # http web
 EXPOSE 80
