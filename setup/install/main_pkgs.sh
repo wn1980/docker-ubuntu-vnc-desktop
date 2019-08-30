@@ -44,8 +44,4 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     git-cola \
     tk \
     kazam \
-    nginx \
-	mysql-server \
-	php-fpm \
-	php-mysql \
     && rm -rf /var/lib/apt/lists/*

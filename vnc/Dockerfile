@@ -51,14 +51,8 @@ COPY ./setup/ui/wallpapers /opt/docker/wallpapers
 #nginx
 #COPY ./setup/sites-available-default /etc/nginx/sites-available/default
 
-# http web
-EXPOSE 80
-
-# normal VNC port
-EXPOSE 5901
-
-#noVNC port
-EXPOSE 6901
+# VNC ports
+EXPOSE 5901 6901
 
 USER $USER
 
