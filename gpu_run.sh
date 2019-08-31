@@ -34,7 +34,7 @@ docker run -d --name $NAME --gpus all \
 	-v /dev:/dev \
 	-v /run/systemd:/run/systemd \
 	-v /etc/localtime:/etc/localtime:ro \
-	-v /tmp/.X11-unix:/tmp/.X11-unix \
+	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
 	-v ~/rosuser_home:$HOME \
 	-e VNC_PASSWORD=vnc123 \
 	-e VNC_RESOLUTION=$p1080 \
