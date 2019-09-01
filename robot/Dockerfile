@@ -75,7 +75,7 @@ RUN usermod -aG audio $USER && \
 #	rm -rf /etc/apache2
 	 
 # ROS master port
-EXPOSE 11311
+#EXPOSE 11311
 
 WORKDIR $HOME
 
