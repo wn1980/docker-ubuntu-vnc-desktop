@@ -1,0 +1,24 @@
+version: "2.3"
+
+services:
+    ros-novnc:
+        image: wn1980/w-ros
+        container_name: ros_novnc
+        hostname: ros-robot
+        runtime: "nvidia"
+        restart: unless-stopped
+        privileged: true
+        command: startup.sh
+        devices:
+            - "/dev:/dev"
+        volumes:
+            - "~/rosuser_home:/home/rosuser/share_folder:rw"
+            - "/run/systemd:/run/systemd"
+            - "/etc/localtime:/etc/localtime:ro"
+            - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+        environment:
+            - "VNC_PASSWORD=vnc123"
+            - "VNC_RESOLUTION=1920x1080"
+        ports:
+            - "5901:5901"
+            - "6901:6901"
