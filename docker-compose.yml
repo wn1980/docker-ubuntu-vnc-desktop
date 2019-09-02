@@ -1,10 +1,21 @@
 version: "2.3"
 
 services:
+    ros-master:
+        build: ./ros_master
+        container_name: ros_master
+        restart: unless-stopped
+        command: stdbuf -o L roslaunch start.launch
+        ports:
+           - "9090:9090"
+           - "11311:11311"
+      
     ros-novnc:
         image: wn1980/w-ros
+        depends_on:
+            - ros-master
         container_name: ros_novnc
-        hostname: ros-robot
+        hostname: w-ros
         runtime: "nvidia"
         restart: unless-stopped
         privileged: true
@@ -19,6 +30,8 @@ services:
         environment:
             - "VNC_PASSWORD=vnc123"
             - "VNC_RESOLUTION=1920x1080"
+            - "ROS_MASTER_URI=http://ros-master:11311"
+#            - "ROS_HOSTNAME=w-ros"
         ports:
             - "5901:5901"
             - "6901:6901"
