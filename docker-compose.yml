@@ -3,9 +3,12 @@ version: "2.3"
 services:
     ros-master:
         build: ./master
+        image: wn1980/w-ros-master
         container_name: ros_master
         restart: unless-stopped
         command: stdbuf -o L roslaunch start.launch
+        volumes:
+           - "/etc/localtime:/etc/localtime:ro"
         ports:
            - "9090:9090"
            - "11311:11311"
@@ -15,15 +18,14 @@ services:
         depends_on:
             - ros-master
         container_name: ros_novnc
-        hostname: w-ros
-        runtime: "nvidia"
+        hostname: ros-novnc
         restart: unless-stopped
         privileged: true
         command: startup.sh
         devices:
             - "/dev:/dev"
         volumes:
-            - "~/rosuser_home:/home/rosuser/share_folder:rw"
+            - "./Documents:/home/rosuser/Documents:rw"
             - "/run/systemd:/run/systemd"
             - "/etc/localtime:/etc/localtime:ro"
             - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
@@ -31,7 +33,9 @@ services:
             - "VNC_PASSWORD=vnc123"
             - "VNC_RESOLUTION=1920x1080"
             - "ROS_MASTER_URI=http://ros-master:11311"
-#            - "ROS_HOSTNAME=w-ros"
+#            - "ROS_HOSTNAME=ros-novnc"
+#            - "ROS_IP=172.18.0.3"
         ports:
             - "5901:5901"
             - "6901:6901"
+        runtime: "nvidia"
