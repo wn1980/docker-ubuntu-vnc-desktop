@@ -11,12 +11,12 @@ services:
            - "11311:11311"
       
     ros-novnc:
-        image: wn1980/w-ros
+        image: wn1980/w-ros:rpi
         depends_on:
             - ros-master
         container_name: ros_novnc
         hostname: w-ros
-        runtime: "nvidia"
+#        runtime: "nvidia"
         restart: unless-stopped
         privileged: true
         command: startup.sh
@@ -31,6 +31,7 @@ services:
             - "VNC_PASSWORD=vnc123"
             - "VNC_RESOLUTION=1920x1080"
             - "ROS_MASTER_URI=http://ros-master:11311"
+            - "ROS_IP=172.18.0.3"
 #            - "ROS_HOSTNAME=w-ros"
         ports:
             - "5901:5901"
