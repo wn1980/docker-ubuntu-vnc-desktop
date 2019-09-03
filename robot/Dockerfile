@@ -32,6 +32,7 @@ WORKDIR $src
 
 RUN git clone https://github.com/wn1980/linorobot_pkgs && \
 	git clone https://github.com/wn1980/turtlebot_lidar && \
+	git clone https://github.com/wn1980/dialogflow_ros_msg && \
 	git clone https://github.com/wn1980/rf2o_laser_odometry && \
 	git clone https://github.com/wn1980/rbx1 && \
 	git clone https://github.com/wn1980/rbx2 && \
