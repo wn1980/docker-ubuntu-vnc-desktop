@@ -46,4 +46,4 @@ services:
             - "6901:6901"
         networks:
             - ros_network
-#        runtime: "nvidia"
+        runtime: "nvidia"
