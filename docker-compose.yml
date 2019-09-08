@@ -59,6 +59,6 @@ services:
         container_name: ros_joystick
         restart: unless-stopped
         privileged: true
-        command: stdbuf -o L roslaunch /root/joystick.launch
+        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
         devices:
             - "/dev/input:/dev/input"
