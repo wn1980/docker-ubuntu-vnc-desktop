@@ -1,8 +1,8 @@
 version: "2.3"
 
-networks:
-  ros_network:
-    driver: bridge
+#networks:
+#  ros_network:
+#    driver: bridge
     
 services:
     ros-master:
@@ -16,8 +16,8 @@ services:
         ports:
            - "9090:9090"
            - "11311:11311"
-        networks:
-           - ros_network
+#        networks:
+#           - ros_network
             
     ros-novnc:
         image: wn1980/w-ros:rpi
@@ -45,6 +45,6 @@ services:
         ports:
             - "5901:5901"
             - "6901:6901"
-        networks:
-            - ros_network
+#        networks:
+#            - ros_network
 #        runtime: "nvidia"
