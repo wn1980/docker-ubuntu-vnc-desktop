@@ -21,6 +21,7 @@ services:
 #           - ros_network
             
     ros-novnc:
+#        build: ./robot
         image: wn1980/w-ros
         depends_on:
             - ros-master
@@ -49,3 +50,15 @@ services:
 #        networks:
 #            - ros_network
         runtime: "nvidia"
+
+    ros-joystick:
+        build: ./joystick
+        image: wn1980/w-ros-joystick
+        depends_on:
+            - ros-master
+        container_name: ros_joystick
+        restart: unless-stopped
+        privileged: true
+        command: stdbuf -o L roslaunch /root/joystick.launch
+        devices:
+            - "/dev/input:/dev/input"

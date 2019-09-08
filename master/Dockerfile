@@ -1,7 +1,8 @@
-FROM ros:kinetic-ros-base
+FROM ros:kinetic-ros-core
+
 RUN apt-get update && apt-get install -y \ 
-	ros-kinetic-rosbridge-server \
-	ros-kinetic-tf2-web-republisher 
+	ros-$ROS_DISTRO-rosbridge-server \
+	ros-$ROS_DISTRO-tf2-web-republisher 
 
 # 	ntp \
 #	iputils-ping \
