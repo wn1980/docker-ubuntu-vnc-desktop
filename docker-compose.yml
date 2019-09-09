@@ -63,5 +63,6 @@ services:
 #        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
         devices:
             - "/dev/input:/dev/input"
+            - "/etc/localtime:/etc/localtime:ro"
         environment:
             - "ROS_MASTER_URI=http://ros-master:11311"
