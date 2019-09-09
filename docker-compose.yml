@@ -59,6 +59,9 @@ services:
         container_name: ros_joystick
         restart: unless-stopped
         privileged: true
-        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
+        command: stdbuf -o L roslaunch turtlebot_lidar_teleop joystick.launch
+#        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
         devices:
             - "/dev/input:/dev/input"
+        environment:
+            - "ROS_MASTER_URI=http://ros-master:11311"

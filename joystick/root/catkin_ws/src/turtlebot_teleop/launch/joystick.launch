@@ -2,7 +2,7 @@
   <!--  smooths inputs from cmd_vel_mux/input/teleop_raw to cmd_vel_mux/input/teleop -->
   <include file="$(find turtlebot_lidar_teleop)/launch/includes/velocity_smoother.launch.xml"/>
 
-  <node pkg="turtlebot_teleop" type="turtlebot_teleop_joy" name="turtlebot_teleop_joystick">
+  <node pkg="turtlebot_lidar_teleop" type="turtlebot_teleop_joy" name="turtlebot_teleop_joystick">
     <param name="scale_angular" value="1.0"/>
     <param name="scale_linear" value="0.25"/>
 
@@ -18,6 +18,8 @@
 
   </node>
 
-  <node pkg="joy" type="joy_node" name="joystick"/>
+  <node pkg="joy" type="joy_node" name="joy_node">
+    <param name="dev" value="/dev/input/js0" />
+  </node>
 
 </launch>
