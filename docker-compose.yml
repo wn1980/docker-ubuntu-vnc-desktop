@@ -28,9 +28,9 @@ services:
         container_name: ros_joystick
         restart: unless-stopped
         privileged: true
-        command: stdbuf -o L roslaunch start.launch
+        command: stdbuf -o L roslaunch --wait start.launch
 #        command: stdbuf -o L roslaunch --wait turtlebot_lidar_teleop joystick.launch
-#        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
+#        command: stdbuf -o L roslaunch --wait teleop_twist_joy teleop.launch
         devices:
             - "/dev/input:/dev/input"
         volumes:
@@ -61,7 +61,7 @@ services:
             - "VNC_PASSWORD=vnc123"
             - "VNC_RESOLUTION=1920x1080"
             - "ROS_MASTER_URI=http://ros-master:11311"
-            - "TURTLEBOT_MAP_FILE=~/Documents/map.yaml"
+            - "TURTLEBOT_MAP_FILE=/home/rosuser/Documents/map.yaml"
 #            - "ROS_HOSTNAME=ros-novnc"
 #            - "ROS_IP=172.18.0.3"
         ports:
