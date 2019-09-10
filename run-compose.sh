@@ -8,12 +8,12 @@ if [ $(uname -m) == 'x86_64' ]
 then
 	docker-compose down
 	docker system prune -f
-	docker-compose -f docker-compose.yml up -d --build ros-master ros-novnc
+	docker-compose up -d --build ros-master ros-novnc ros-joystick
 elif [ $(uname -m) == 'aarch64' ] 
 then 
-	docker-compose down
+	docker-compose -f docker-compose-arm64.yml down
 	docker system prune -f
-	docker-compose -f docker-compose-arm64.yml up -d --build ros-master ros-novnc
+	docker-compose -f docker-compose-arm64.yml up -d --build ros-master ros-novnc ros-joystick
 else
 	echo 'not matched platform!'
 	exit 0
