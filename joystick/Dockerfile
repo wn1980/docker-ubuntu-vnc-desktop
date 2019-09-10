@@ -12,4 +12,8 @@ COPY ./root/ /root/
 RUN /bin/bash -c 'source /opt/ros/$ROS_DISTRO/setup.bash && cd ~/catkin_ws && catkin_make -DCMAKE_BUILD_TYPE=Release'
 
 COPY ./ros_entrypoint.sh /
+COPY ./start.launch /
 
+RUN usermod -aG dialout root && \
+	usermod -aG plugdev root && \
+	usermod -aG input root

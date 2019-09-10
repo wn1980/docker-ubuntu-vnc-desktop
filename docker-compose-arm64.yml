@@ -19,6 +19,25 @@ services:
            - "11311:11311"
 #        networks:
 #           - ros_network
+
+    ros-joystick:
+        build: ./joystick
+        image: wn1980/w-ros-joystick:rpi
+        depends_on:
+            - ros-master
+        container_name: ros_joystick
+        restart: unless-stopped
+        privileged: true
+        command: stdbuf -o L roslaunch start.launch
+#        command: stdbuf -o L roslaunch --wait turtlebot_lidar_teleop joystick.launch
+#        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
+        devices:
+            - "/dev/input:/dev/input"
+        volumes:
+            - "/dev/input:/dev/input"
+            - "/etc/localtime:/etc/localtime:ro"
+        environment:
+            - "ROS_MASTER_URI=http://ros-master:11311"
             
     ros-novnc:
 #        build: ./robot
@@ -33,6 +52,7 @@ services:
         devices:
             - "/dev:/dev"
         volumes:
+            - "/dev:/dev"
             - "./Documents:/home/rosuser/Documents:rw"
             - "/run/systemd:/run/systemd"
             - "/etc/localtime:/etc/localtime:ro"
@@ -50,19 +70,3 @@ services:
 #        networks:
 #            - ros_network
 #        runtime: "nvidia"
-
-    ros-joystick:
-        build: ./joystick
-        image: wn1980/w-ros-joystick:rpi
-        depends_on:
-            - ros-master
-        container_name: ros_joystick
-        restart: unless-stopped
-        privileged: true
-        command: stdbuf -o L roslaunch --wait turtlebot_lidar_teleop joystick.launch
-#        command: stdbuf -o L roslaunch teleop_twist_joy teleop.launch
-        devices:
-            - "/dev/input:/dev/input"
-            - "/etc/localtime:/etc/localtime:ro"
-        environment:
-            - "ROS_MASTER_URI=http://ros-master:11311"
