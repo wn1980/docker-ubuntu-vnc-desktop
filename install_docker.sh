@@ -16,7 +16,7 @@ else
 	exit 0
 fi
 
-apt-get install \
+apt-get update && apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -30,4 +30,4 @@ add-apt-repository \
    $(lsb_release -cs) \
    stable"
    
-apt-get update && sudo apt-get install docker-ce
+apt-get update && sudo apt-get install -y docker-ce
