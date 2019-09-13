@@ -22,7 +22,7 @@ ENV src=$ws/src
 
 USER $USER
 
-COPY ./setup/asoundrc.txt $HOME/.asoundrc
+#COPY ./setup/asoundrc.txt $HOME/.asoundrc
 
 RUN echo "\n#workspace setting\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
 RUN echo "\n#Google Cloud API setting\n#export GOOGLE_APPLICATION_CREDENTIALS='$HOME/path/file.json'\n" >> $HOME/.bashrc

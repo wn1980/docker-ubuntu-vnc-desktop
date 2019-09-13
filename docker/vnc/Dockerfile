@@ -61,9 +61,9 @@ ENV SHELL=/bin/bash
 WORKDIR $HOME
 
 #icewm ui
-COPY ./setup/ui/icewm $HOME/.icewm
+#COPY ./setup/ui/icewm $HOME/.icewm
 #jwm ui
-COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
-RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
+#COPY ./setup/ui/jwm/jwmrc $HOME/.jwm
+#RUN ln -s $HOME/.jwm/main.jwmrc $HOME/.jwmrc
 
 USER root
