@@ -7,7 +7,7 @@ version: "2.3"
 services:
 
     ros-master:
-        build: ./master
+        build: ./docker/master
         image: wn1980/w-ros-master:rpi
         container_name: ros_master
         restart: unless-stopped
@@ -21,7 +21,7 @@ services:
 #           - ros_network
 
     ros-joystick:
-        build: ./joystick
+        build: ./docker/joystick
         image: wn1980/w-ros-joystick:rpi
         depends_on:
             - ros-master
@@ -40,7 +40,7 @@ services:
             - "ROS_MASTER_URI=http://ros-master:11311"
             
     ros-novnc:
-#        build: ./robot
+#        build: ./docker/robot
         image: wn1980/w-ros:rpi
         depends_on:
             - ros-master
@@ -54,6 +54,8 @@ services:
         volumes:
             - "/dev:/dev"
             - "./Documents:/home/rosuser/Documents:rw"
+            - "./catkin_ws:/home/rosuser/catkin_ws:rw"
+            - "./ui/main.jwmrc:/home/rosuser/.jwmrc:rw"
             - "/run/systemd:/run/systemd"
             - "/etc/localtime:/etc/localtime:ro"
             - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
