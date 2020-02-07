@@ -15,7 +15,7 @@ RUN pip install --upgrade pyasn1 && \
 	pip install --upgrade cryptography && \
 	python -m easy_install --upgrade pyOpenSSL
 
-RUN pip install pyaudio pyusb click pixel-ring spidev pydub beautifulsoup4 gTTS-token dialogflow==0.6.0 gTTS==2.0.3 
+#RUN pip install pyaudio pyusb click pixel-ring spidev pydub beautifulsoup4 gTTS-token dialogflow==0.6.0 gTTS==2.0.3 
 
 ENV ws=$HOME/catkin_ws
 ENV src=$ws/src
