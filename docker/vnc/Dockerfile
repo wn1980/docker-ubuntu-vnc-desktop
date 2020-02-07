@@ -18,10 +18,10 @@ ENV NO_VNC_HOME=/opt/noVNC
 WORKDIR /opt
 RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
 	tar xzfv noVNC-1.1.0.tar.gz --strip 1 -C $NO_VNC_HOME && \
-	tar xzfv websockify-0.8.0.tar.gz --strip 1 -C $NO_VNC_HOME/utils/websockify && \
+	tar xzfv websockify-0.9.0.tar.gz --strip 1 -C $NO_VNC_HOME/utils/websockify && \
 	chmod +x -v $NO_VNC_HOME/utils/*.sh && \
 	ln -s $NO_VNC_HOME/vnc.html $NO_VNC_HOME/index.html && \
-	rm -f noVNC-1.1.0.tar.gz websockify-0.8.0.tar.gz
+	rm -f noVNC-1.1.0.tar.gz websockify-0.9.0.tar.gz
 
 COPY ./setup/install/chrome.sh /opt/docker/install/
 RUN /opt/docker/install/chrome.sh
@@ -42,8 +42,11 @@ ENV PATH="/opt/docker/bin:${PATH}"
 
 RUN chmod -Rf 777 /opt/docker/log/
 
-COPY ./setup/ui/jwm/jwm-session /opt/docker/bin/
-RUN chmod a+x /opt/docker/bin/jwm-session
+#COPY ./setup/ui/jwm/jwm-session /opt/docker/bin/
+#RUN chmod a+x /opt/docker/bin/jwm-session
+
+COPY ./setup/ui/flwm/flwm-session /opt/docker/bin/
+RUN chmod a+x /opt/docker/bin/flwm-session
 
 #wallpapers
 COPY ./setup/ui/wallpapers /opt/docker/wallpapers
