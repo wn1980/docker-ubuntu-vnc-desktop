@@ -35,6 +35,7 @@ docker run -d --name $NAME \
 	-v /run/systemd:/run/systemd \
 	-v /etc/localtime:/etc/localtime:ro \
 	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+	-e USER=$USER \
 	-e VNC_PASSWORD=vnc123 \
 	-e VNC_RESOLUTION=$p1080 \
 	wn1980/w-ros-novnc${tag} startup.sh
