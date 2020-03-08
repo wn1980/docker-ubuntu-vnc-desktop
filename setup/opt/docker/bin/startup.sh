@@ -2,27 +2,6 @@
 
 set -e
 
-#dynamically add user
-#USER=${USER:-root}
-#PASSWORD=$VNC_PASSWORD
-#HOME=/root
-
-#if [ "$USER" != "root" ]; then
-#	if [ $(getent passwd $USER) ] ; then
-#		echo user $USER exists
-#	else
-#		echo "* enable custom user: $USER"
-#		useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USER
-#		if [ -z "$PASSWORD" ]; then
-#			echo "  set default password to \"ubuntu\""
-#			PASSWORD=ubuntu
-#		fi
-#		HOME=/home/$USER
-#		echo "$USER:$PASSWORD" | chpasswd
-#		[ -d "/dev/snd" ] && chgrp -R adm /dev/snd
-#	fi
-#fi
-
 # set VNC password
 if [ -n "$VNC_PASSWORD" ]; then
 	mkdir -p "$HOME/.vnc"
@@ -42,9 +21,6 @@ fi
 
 # Chrome browser
 /opt/docker/bin/chrome-init.sh
-
-# nginx web server
-#/usr/sbin/nginx
 
 # the rest of alls
 exec /opt/docker/bin/tini-$(uname -m) -- /usr/bin/supervisord -n -c /opt/docker/custom-supervisord.conf
