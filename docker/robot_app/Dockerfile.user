@@ -1,0 +1,49 @@
+ARG tag
+FROM wn1980/w-ros${tag}
+
+# Configure user
+ARG user=rosuser
+ARG passwd=rosuser
+ARG uid
+ARG gid
+
+ENV USER=$user \
+	PASSWD=$passwd \
+	UID=$uid \
+	GID=$gid
+	
+ENV HOME=/home/$USER
+
+RUN groupadd $USER && \
+    useradd --create-home --no-log-init -g $USER $USER && \
+    usermod -aG sudo $USER && \
+    echo "$PASSWD:$PASSWD" | chpasswd && \
+    chsh -s /bin/bash $USER && \
+    usermod  --uid $UID $USER && \
+    groupmod --gid $GID $USER
+    
+COPY ./setup/install/config.sh /opt/docker/install/
+
+USER $USER
+
+RUN /opt/docker/install/config.sh
+RUN echo "\n#workspace setting\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
+
+RUN rosdep fix-permissions && rosdep update
+RUN /bin/bash -c "source ~/.bashrc"
+
+USER root
+
+ENV ws=$HOME/catkin_ws
+ENV src=$ws/src
+
+RUN usermod -aG audio $USER && \
+	usermod -aG video $USER && \
+	usermod -aG dialout $USER  && \
+	usermod -aG plugdev $USER 
+
+# clean
+RUN apt-get autoclean \
+    && apt-get autoremove 
+
+WORKDIR $HOME

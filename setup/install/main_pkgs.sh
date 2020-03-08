@@ -8,8 +8,6 @@ apt-get update && apt-get install --no-install-recommends --allow-unauthenticate
     curl \
     wget \
 	supervisor \
-    icewm \
-    jwm \
     flwm \
     x11vnc \
     xvfb \
