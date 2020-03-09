@@ -2,8 +2,8 @@ ARG tag
 FROM wn1980/w-ros${tag}
 
 # Configure user
-ARG user=rosuser
-ARG passwd=rosuser
+ARG user
+ARG passwd=$user
 ARG uid
 ARG gid
 
@@ -11,8 +11,6 @@ ENV USER=$user \
 	PASSWD=$passwd \
 	UID=$uid \
 	GID=$gid
-	
-ENV HOME=/home/$USER
 
 RUN groupadd $USER && \
     useradd --create-home --no-log-init -g $USER $USER && \
@@ -21,6 +19,12 @@ RUN groupadd $USER && \
     chsh -s /bin/bash $USER && \
     usermod  --uid $UID $USER && \
     groupmod --gid $GID $USER
+
+ENV HOME=/home/$USER
+ENV ws=$HOME/catkin_ws
+ENV src=$ws/src
+
+WORKDIR $HOME
     
 COPY ./setup/install/config.sh /opt/docker/install/
 
@@ -34,9 +38,6 @@ RUN /bin/bash -c "source ~/.bashrc"
 
 USER root
 
-ENV ws=$HOME/catkin_ws
-ENV src=$ws/src
-
 RUN usermod -aG audio $USER && \
 	usermod -aG video $USER && \
 	usermod -aG dialout $USER  && \
@@ -45,5 +46,3 @@ RUN usermod -aG audio $USER && \
 # clean
 RUN apt-get autoclean \
     && apt-get autoremove 
-
-WORKDIR $HOME

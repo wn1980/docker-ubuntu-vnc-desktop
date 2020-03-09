@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 
+#pre-defined constant (do not change)
 p1080=1920x1080
 p720=1280x720
 p169=1600x900
 
+#please change this user settings
+user=robot
+vnc_password=vnc123
+vnc_resolution=p720
+
+#do not change follwing lines, if you do not know what it is.
 if [ $(uname -m) == 'x86_64' ] 
 then
 	tag=
@@ -17,7 +24,7 @@ fi
 
 if [ -f "$PWD/catkin_ws" ]
 then
-	mkdir -p "PWD/catkin_ws"
+	mkdir -p "$PWD/catkin_ws"
 fi
 
 if [ "$1" == 'gpu' ]; then
@@ -27,8 +34,11 @@ else
   GPU=
 fi
 
+docker pull wn1980/w-ros${tag}
+
 #Build new iamge
 docker build -t wn1980/w-ros-d${tag} \
+	--build-arg user=$user \
 	--build-arg uid=$(id -u) \
 	--build-arg gid=$(id -g) \
 	-f docker/robot_app/Dockerfile.user .
@@ -47,8 +57,8 @@ docker run -d --name $NAME $GPU \
 	-v /run/systemd:/run/systemd \
 	-v /etc/localtime:/etc/localtime:ro \
 	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-	-v $PWD/Documents:/home/rosuser/Documents:rw \
-	-v $PWD/catkin_ws:/home/rosuser/catkin_ws:rw \
-	-e VNC_PASSWORD=vnc123 \
-	-e VNC_RESOLUTION=$p1080 \
+	-v $PWD/Documents:/home/$user/Documents:rw \
+	-v $PWD/catkin_ws:/home/$user/catkin_ws:rw \
+	-e VNC_PASSWORD=$vnc_password \
+	-e VNC_RESOLUTION=$vnc_resolution \
 	wn1980/w-ros-d${tag} startup.sh
