@@ -27,6 +27,8 @@ ENV src=$ws/src
 WORKDIR $HOME
     
 COPY ./setup/install/config.sh /opt/docker/install/
+COPY ./setup/install/ws_clone.sh /opt/docker/install/
+COPY ./setup/install/ws_make.sh /opt/docker/install/
 
 USER $USER
 

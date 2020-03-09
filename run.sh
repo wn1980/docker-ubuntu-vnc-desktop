@@ -5,12 +5,12 @@ p1080=1920x1080
 p720=1280x720
 p169=1600x900
 
-#please change this user settings
+#please adjust this user settings
 user=robot
 vnc_password=vnc123
-vnc_resolution=p720
+vnc_resolution=$p720
 
-#do not change follwing lines, if you do not know what it is.
+#===== do not change following lines, if you do not know exactly what it is. =====
 if [ $(uname -m) == 'x86_64' ] 
 then
 	tag=
@@ -22,9 +22,14 @@ else
 	exit 0
 fi
 
-if [ -f "$PWD/catkin_ws" ]
+if [ -f "$PWD/catkin_ws/src" ]
 then
-	mkdir -p "$PWD/catkin_ws"
+	mkdir -p "$PWD/catkin_ws/src"
+fi
+
+if [ -f "$PWD/Documents" ]
+then
+	mkdir -p "$PWD/Documents"
 fi
 
 if [ "$1" == 'gpu' ]; then
