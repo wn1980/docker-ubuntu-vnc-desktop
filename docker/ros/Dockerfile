@@ -33,7 +33,7 @@ RUN rosdep init && \
 
 # install ros packages
 RUN apt-get update && apt-get install -y \
-    ros-kinetic-ros-core=1.3.2-0* \ 
+    #ros-kinetic-ros-core=1.3.2-0* \ 
     ros-kinetic-desktop-full=1.3.2-0* \ 
     ros-kinetic-turtlebot* \ 
     && rm -rf /var/lib/apt/lists/*

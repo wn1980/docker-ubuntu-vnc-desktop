@@ -22,14 +22,16 @@ else
 	exit 0
 fi
 
-if [ -f "$PWD/catkin_ws/src" ]
+if [ ! -d "$PWD/catkin_ws/src" ]
 then
-	mkdir -p "$PWD/catkin_ws/src"
+	echo please create folder with command: 'mkdir -p $PWD/catkin_ws/src'
+	exit 1
 fi
 
-if [ -f "$PWD/Documents" ]
+if [ ! -d "$PWD/Documents" ]
 then
-	mkdir -p "$PWD/Documents"
+	echo please create folder with command: 'mkdir -p $PWD/Documents'
+	exit 1
 fi
 
 if [ "$1" == 'gpu' ]; then
