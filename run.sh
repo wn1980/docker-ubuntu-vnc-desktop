@@ -45,6 +45,7 @@ docker pull wn1980/w-ros${tag}
 
 #Build new iamge
 docker build -t wn1980/w-ros-d${tag} \
+	--build-arg tag=$tag \
 	--build-arg user=$user \
 	--build-arg uid=$(id -u) \
 	--build-arg gid=$(id -g) \
