@@ -3,7 +3,7 @@ FROM wn1980/w-ros${tag}
 
 # Configure user
 ARG user
-ARG passwd=$user
+ARG passwd
 ARG uid
 ARG gid
 
@@ -38,7 +38,7 @@ RUN /opt/docker/install/config.sh
 
 RUN echo "\n# ROS workspace setting\
 			\nif [ ! -f $ws/devel/setup.bash ]; then\
-				\n sh /opt/docker/install/ws_make.sh\
+				\n    sh /opt/docker/install/ws_make.sh\
 			\nfi\
 		\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
 

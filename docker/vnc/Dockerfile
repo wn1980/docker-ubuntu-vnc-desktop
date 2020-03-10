@@ -13,8 +13,6 @@ RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
 	chmod +x -v $NO_VNC_HOME/utils/*.sh && \
 	rm -f noVNC-1.1.0.tar.gz websockify-0.9.0.tar.gz
 
-COPY ./setup/index.html $NO_VNC_HOME
-
 COPY ./setup/install/chrome.sh /opt/docker/install/
 RUN /opt/docker/install/chrome.sh
 
@@ -25,6 +23,9 @@ RUN /opt/docker/install/main_pkgs.sh
 # clean
 RUN apt-get autoclean && \
     apt-get autoremove 
+
+# add index.html
+COPY ./setup/index.html $NO_VNC_HOME
 
 # add configuation files
 COPY ./setup/opt /opt

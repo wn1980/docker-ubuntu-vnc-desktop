@@ -7,6 +7,7 @@ p169=1600x900
 
 #please adjust this user settings
 user=robot
+passwd=robot
 vnc_password=vnc123
 vnc_resolution=$p720
 
@@ -24,15 +25,13 @@ fi
 
 if [ ! -d "$PWD/catkin_ws/src" ]
 then
-	#echo please create folder with command: 'mkdir -p $PWD/catkin_ws/src'
-	#exit 1
+	echo create folder with command: 'mkdir -p $PWD/catkin_ws/src'
 	mkdir -p $PWD/catkin_ws/src
 fi
 
 if [ ! -d "$PWD/Documents" ]
 then
-	#echo please create folder with command: 'mkdir -p $PWD/Documents'
-	#exit 1
+	echo create folder with command: 'mkdir -p $PWD/Documents'
 	mkdir -p $PWD/Documents
 fi
 
@@ -43,17 +42,24 @@ else
   GPU=
 fi
 
+echo Update image
+
 docker pull wn1980/w-ros${tag}
+
+echo Build user image
 
 #Build new iamge
 docker build -t wn1980/w-ros-d${tag} \
 	--build-arg tag=$tag \
 	--build-arg user=$user \
+	--build-arg passwd=$passwd \
 	--build-arg uid=$(id -u) \
 	--build-arg gid=$(id -g) \
 	-f docker/robot_app/Dockerfile.user .
 
 NAME=w-ros-daemon
+
+echo Remove existing container
 
 docker rm -f $NAME
 
@@ -69,6 +75,9 @@ docker run -d --name $NAME $GPU \
 	-v /etc/localtime:/etc/localtime \
 	-v $PWD/Documents:/home/$user/Documents:rw \
 	-v $PWD/catkin_ws:/home/$user/catkin_ws:rw \
+	-v $PWD/config/wmx:/home/$user/.wmx:rw \
 	-e VNC_PASSWORD=$vnc_password \
 	-e VNC_RESOLUTION=$vnc_resolution \
 	wn1980/w-ros-d${tag} startup.sh
+
+echo All done!
