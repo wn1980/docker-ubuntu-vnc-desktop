@@ -24,14 +24,16 @@ fi
 
 if [ ! -d "$PWD/catkin_ws/src" ]
 then
-	echo please create folder with command: 'mkdir -p $PWD/catkin_ws/src'
-	exit 1
+	#echo please create folder with command: 'mkdir -p $PWD/catkin_ws/src'
+	#exit 1
+	mkdir -p $PWD/catkin_ws/src
 fi
 
 if [ ! -d "$PWD/Documents" ]
 then
-	echo please create folder with command: 'mkdir -p $PWD/Documents'
-	exit 1
+	#echo please create folder with command: 'mkdir -p $PWD/Documents'
+	#exit 1
+	mkdir -p $PWD/Documents
 fi
 
 if [ "$1" == 'gpu' ]; then
@@ -59,6 +61,7 @@ docker system prune -f
 
 docker run -d --name $NAME $GPU \
 	-p 6901:6901 \
+	--net=host \
 	--privileged \
 	--restart unless-stopped \
 	-v /dev:/dev \
