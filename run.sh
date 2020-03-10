@@ -57,13 +57,12 @@ docker rm -f $NAME
 docker system prune -f
 
 docker run -d --name $NAME $GPU \
-	--network host \
+	-p 6901:6901 \
 	--privileged \
 	--restart unless-stopped \
 	-v /dev:/dev \
 	-v /run/systemd:/run/systemd \
-	-v /etc/localtime:/etc/localtime:ro \
-	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+	-v /etc/localtime:/etc/localtime \
 	-v $PWD/Documents:/home/$user/Documents:rw \
 	-v $PWD/catkin_ws:/home/$user/catkin_ws:rw \
 	-e VNC_PASSWORD=$vnc_password \

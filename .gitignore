@@ -2,3 +2,4 @@ catkin_ws/src
 catkin_ws/build
 catkin_ws/devel
 /config/asoundrc.txt
+/catkin_ws/.catkin_workspace

@@ -32,10 +32,16 @@ COPY ./setup/install/ws_make.sh /opt/docker/install/
 
 USER $USER
 
-RUN /opt/docker/install/config.sh
-RUN echo "\n#workspace setting\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
-
 RUN rosdep fix-permissions && rosdep update
+
+RUN /opt/docker/install/config.sh
+
+RUN echo "\n# ROS workspace setting\
+			\nif [ ! -f $ws/devel/setup.bash ]; then\
+				\n sh /opt/docker/install/ws_make.sh\
+			\nfi\
+		\nsource $ws/devel/setup.bash\n" >> $HOME/.bashrc
+
 RUN /bin/bash -c "source ~/.bashrc"
 
 USER root
