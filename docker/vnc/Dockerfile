@@ -34,12 +34,6 @@ ENV PATH="/opt/docker/bin:${PATH}"
 
 RUN chmod -Rf 777 /opt/docker/log/
 
-COPY ./setup/ui/flwm/flwm-session /opt/docker/bin/
-RUN chmod a+x /opt/docker/bin/flwm-session
-
-#wallpapers
-COPY ./setup/ui/wallpapers /opt/docker/wallpapers
-
 # VNC ports
 EXPOSE 5901 6901
 

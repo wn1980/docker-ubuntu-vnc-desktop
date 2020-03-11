@@ -1,9 +1,11 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-xsetroot -solid \#006060
+set -e
+
+xsetroot -solid \#999900
 xrdb .Xresources
 # xset, xmodmap, other configuration programs
-flwm &
+flwm -x &
 WindowManager=$!
 # xterm, other automatically-launched programs
 wait $WindowManager

@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+set -e
 
 #replace 1024x768 with: 1920x1080 | 1600x900 | 1280x720
 

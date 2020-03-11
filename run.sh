@@ -73,9 +73,12 @@ docker run -d --name $NAME $GPU \
 	-v /dev:/dev \
 	-v /run/systemd:/run/systemd \
 	-v /etc/localtime:/etc/localtime \
+	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
 	-v $PWD/Documents:/home/$user/Documents:rw \
 	-v $PWD/catkin_ws:/home/$user/catkin_ws:rw \
 	-v $PWD/config/wmx:/home/$user/.wmx:rw \
+	-v $PWD/config/asoundrc.txt:/home/$user/.asoundrc:rw \
+	-v $PWD/config/Xresources.txt:/home/$user/.Xresources:rw \
 	-e VNC_PASSWORD=$vnc_password \
 	-e VNC_RESOLUTION=$vnc_resolution \
 	wn1980/w-ros-d${tag} startup.sh
