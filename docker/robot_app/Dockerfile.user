@@ -2,10 +2,10 @@ ARG tag
 FROM wn1980/w-ros${tag}
 
 # Configure user
-ARG user
-ARG passwd
-ARG uid
-ARG gid
+ARG user=robot
+ARG passwd=robot
+ARG uid=1000
+ARG gid=1000
 
 ENV USER=$user \
 	PASSWD=$passwd \
