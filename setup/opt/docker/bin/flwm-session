@@ -3,7 +3,11 @@
 set -e
 
 xsetroot -solid \#999900
-xrdb .Xresources
+
+if [ -f "$HOME/.Xresources" ]; then
+	xrdb .Xresources
+fi
+
 # xset, xmodmap, other configuration programs
 flwm -x &
 WindowManager=$!

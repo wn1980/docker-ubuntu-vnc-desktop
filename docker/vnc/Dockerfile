@@ -5,7 +5,7 @@ FROM wn1980/w-ros-kinetic${tag}
 COPY ./setup/*.tar.gz /opt/
 
 #install noVNC
-ENV NO_VNC_HOME=/opt/noVNC
+ENV NO_VNC_HOME=/opt/docker/noVNC
 WORKDIR /opt
 RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
 	tar xzfv noVNC-1.1.0.tar.gz --strip 1 -C $NO_VNC_HOME && \
@@ -30,11 +30,15 @@ COPY ./setup/index.html $NO_VNC_HOME
 # add configuation files
 COPY ./setup/opt /opt
 
-ENV PATH="/opt/docker/bin:${PATH}"
-
 RUN chmod -Rf 777 /opt/docker/log/
+
+ENV PATH="/opt/docker/bin:${PATH}"
 
 # VNC ports
 EXPOSE 5901 6901
 
-ENV SHELL=/bin/bash
+ENV SHELL=/bin/bash \
+	USER=root \
+	HOME=/root
+	
+WORKDIR $HOME
