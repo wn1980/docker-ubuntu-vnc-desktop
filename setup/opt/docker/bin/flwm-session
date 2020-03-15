@@ -2,7 +2,7 @@
 
 set -e
 
-xsetroot -solid \#999900
+xsetroot -solid \#333333
 
 if [ -f "$HOME/.Xresources" ]; then
 	xrdb .Xresources
