@@ -48,15 +48,6 @@ docker pull wn1980/w-ros${tag}
 
 echo Build user image
 
-#Build new iamge
-docker build -t wn1980/w-ros-d${tag} \
-	--build-arg tag=$tag \
-	--build-arg user=$user \
-	--build-arg passwd=$passwd \
-	--build-arg uid=$(id -u) \
-	--build-arg gid=$(id -g) \
-	-f docker/robot_app/Dockerfile.user .
-
 NAME=w-ros-daemon
 
 echo Remove existing container
@@ -65,11 +56,10 @@ docker rm -f $NAME
 
 docker system prune -f
 
-docker run -d --name $NAME $GPU \
+docker run -it --rm --name $NAME $GPU \
 	-p 6901:6901 \
 	--net=host \
 	--privileged \
-	--restart unless-stopped \
 	-v /dev:/dev \
 	-v /run/systemd:/run/systemd \
 	-v /etc/localtime:/etc/localtime \
@@ -79,8 +69,13 @@ docker run -d --name $NAME $GPU \
 	-v $PWD/config/wmx:/home/$user/.wmx:rw \
 	-v $PWD/config/asoundrc.txt:/home/$user/.asoundrc:rw \
 	-v $PWD/config/one-dark-Xresources.txt:/home/$user/.Xresources:rw \
+	-e USER=root \
 	-e VNC_PASSWORD=$vnc_password \
 	-e VNC_RESOLUTION=$vnc_resolution \
-	wn1980/w-ros-d${tag} startup.sh
+	wn1980/w-ros-novnc startup.sh
 
 echo All done!
+
+
+#	-e USER=root \
+#	-e $HOME=/root \

@@ -8,16 +8,36 @@ if [ -n "$VNC_PASSWORD" ]; then
     echo -n "$VNC_PASSWORD" > $HOME/.vnc/password1
     x11vnc -storepasswd $(cat $HOME/.vnc/password1) $HOME/.vnc/password2
     chmod 444 $HOME/.vnc/password*
-    sed -i 's/^command=x11vnc.*/& -rfbauth %(ENV_HOME)s\/\.vnc\/password2/' /opt/docker/custom-supervisord.conf
+    vnc_str="-rfbauth ${HOME}/.vnc/password2"
     export VNC_PASSWORD=
+else
+	vnc_str=
 fi
 
+cat > "/opt/docker/bin/vnc.sh" <<EOF
+#!/usr/bin/env bash
+
+set -e
+
+x11vnc -display :1 -xkb -forever -shared -repeat -rfbport 5901 ${vnc_str}
+EOF
+
+chmod a+x /opt/docker/bin/vnc.sh
+
 # set VNC resolution
-if [ -n "$VNC_RESOLUTION" ]; then
-    sed -i "s/1024x768/$VNC_RESOLUTION/" /opt/docker/bin/display1.sh
-else
+if [ ! -n "$VNC_RESOLUTION" ]; then
 	export VNC_RESOLUTION=1024x768
 fi
+
+cat > "/opt/docker/bin/display1.sh" <<EOF
+#!/usr/bin/env bash
+
+set -e
+
+Xvfb :1 -screen 0 ${VNC_RESOLUTION}x24
+EOF
+
+chmod a+x /opt/docker/bin/display1.sh
 
 # Chrome browser
 /opt/docker/bin/chrome-init.sh
