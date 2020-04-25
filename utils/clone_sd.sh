@@ -9,5 +9,5 @@ fi
 
 name=ubuntu18.04-docker-rpi-`date +%d%m%y`.img.gz
 
-dd bs=4M if="$1" | gzip > $name
+dd bs=4M if="$1" status=progress | gzip > $name
 chmod 666 $name
