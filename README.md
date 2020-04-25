@@ -10,7 +10,12 @@ $ sh get-docker.sh
 $ CHANNEL=nightly curl -fsSL https://get.docker.com -o get-docker.sh
 $ sh get-docker.sh
 ```
-- ### Ubuntu arm64 (Refer to [Docker manual](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
+- ### Ubuntu 20.04 LTS Server 
+```
+$ sudo apt install docker.io docker-compose
+```
+
+- ### Ubuntu 18.04 LTS Server (Refer to [Docker manual](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
 ```
 $ sudo apt-get install \
     apt-transport-https \
@@ -28,7 +33,33 @@ $ sudo add-apt-repository \
    
 $ sudo apt-get update && sudo apt-get install docker-ce
 ```
-**Note**: For raspberry pi with ubuntu 18.04 server
+
+#### Enable WiFi using netplan ([reference](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line))
+```
+$ sudo nano /etc/netplan/50-cloud-init.yaml
+
+# edit somethings like this
+
+network:
+    ethernets:
+        eth0:
+            dhcp4: true
+            optional: true
+    version: 2
+    wifis:
+        wlan0:
+            dhcp4: true 
+            optional: true
+            access-points:
+                "SSID-NAME-HERE":
+                    password: "PASSWORD-HERE"
+                    
+# then run these commands
+$ sudo netplan generate
+$ sudo netplan apply
+$ ip a #to check ip address
+```
+
 #### Enable WiFi
 ```
 # Connect to internet via lan first
