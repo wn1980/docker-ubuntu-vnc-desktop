@@ -36,7 +36,7 @@ $ sudo apt-get update && sudo apt-get install docker-ce
 
 #### Enable WiFi using netplan ([reference](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line))
 ```
-$ sudo nano /etc/netplan/50-cloud-init.yaml
+$ sudo nano /etc/netplan/50-cloud-init.yaml #OR edit file "system-boot/network-config" directly from SD card  
 
 # edit somethings like this
 
