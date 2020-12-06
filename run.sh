@@ -14,10 +14,10 @@ vnc_resolution=$p1080
 #===== do not change following lines, if you do not know exactly what it is. =====
 if [ $(uname -m) == 'x86_64' ] 
 then
-	tag=
+	TAG=
 elif [ $(uname -m) == 'aarch64' ] 
 then 
-	tag=:rpi
+	TAG=:rpi
 else
 	echo 'not matched platform!'
 	exit 0
@@ -36,51 +36,41 @@ then
 fi
 
 if [ "$1" == 'gpu' ]; then
+  RUNTIME='nvidia'
   GPU='--gpus all'
   echo 'Running with GPU'
 else
+  RUNTIME='runc'
   GPU=
 fi
+
+#Generate .env file
+cat > "$PWD/.env" <<EOF
+TAG=$TAG
+RUNTIME=$RUNTIME
+USER=$USER
+VNC_PASSWORD=$vnc_password
+VNC_RESOLUTION=$vnc_resolution
+EOF
 
 #echo Update image
 
 #docker pull wn1980/w-ros${tag}
-
 echo Build user image
 
 #Build new iamge
-docker build -t wn1980/w-ros-d${tag} \
-	--build-arg tag=$tag \
+docker build -t wn1980/w-ros-d${TAG} \
+	--build-arg tag=$TAG \
 	--build-arg user=$user \
 	--build-arg passwd=$passwd \
 	--build-arg uid=$(id -u) \
 	--build-arg gid=$(id -g) \
 	-f docker/robot_app/Dockerfile .
 
-NAME=w-ros-daemon
-
-echo Remove existing container
-
-docker rm -f $NAME
-
+docker-compose down
 docker system prune -f
+docker-compose up -d --build ros-master ros-webui ros-joystick
 
-docker run -d --name $NAME $GPU \
-	-p 6901:6901 \
-	--net=host \
-	--privileged \
-	--restart unless-stopped \
-	-v /dev:/dev \
-	-v /run/systemd:/run/systemd \
-	-v /etc/localtime:/etc/localtime \
-	-v /tmp/.X11-unix:/tmp/.X11-unix:rw \
-	-v $PWD/Documents:/home/$user/Documents:rw \
-	-v $PWD/catkin_ws:/home/$user/catkin_ws:rw \
-	-v $PWD/config/wmx:/home/$user/.wmx:rw \
-	-v $PWD/config/asoundrc.txt:/home/$user/.asoundrc:rw \
-	-v $PWD/config/one-dark-Xresources.txt:/home/$user/.Xresources:rw \
-	-e VNC_PASSWORD=$vnc_password \
-	-e VNC_RESOLUTION=$vnc_resolution \
-	wn1980/w-ros-d${tag} startup.sh
+
 
 echo All done!

@@ -2,13 +2,13 @@ version: "2.3"
 
 #networks:
 #  ros_network:
-#    name: ros_network
+#    driver: bridge
     
 services:
 
     ros-master:
-        build: ./docker/master
-        image: wn1980/w-ros-master
+#        build: ./docker/master
+        image: wn1980/w-ros-master${TAG}
         container_name: ros_master
         restart: unless-stopped
         command: stdbuf -o L roslaunch start.launch
@@ -21,8 +21,8 @@ services:
 #           - ros_network
 
     ros-joystick:
-        build: ./docker/joystick
-        image: wn1980/w-ros-joystick
+#        build: ./docker/joystick
+        image: wn1980/w-ros-joystick${TAG}
         depends_on:
             - ros-master
         container_name: ros_joystick
@@ -39,30 +39,31 @@ services:
         environment:
             - "ROS_MASTER_URI=http://ros-master:11311"
             
-    ros-novnc:
+    ros-webui:
 #        build: ./docker/robot
-        image: wn1980/w-ros
+        image: wn1980/w-ros-d${TAG}
         depends_on:
             - ros-master
-        container_name: ros_novnc
-        hostname: ros-novnc
+        container_name: ros_webui
+        hostname: ros-webui
         restart: unless-stopped
         privileged: true
         command: startup.sh
         devices:
             - "/dev:/dev"
         volumes:
-            - "/dev:/dev"
-            - "./Documents:/home/rosuser/Documents:rw"
-            - "./catkin_ws:/home/rosuser/catkin_ws:rw"
-            - "./config/jwmrc.xml:/home/rosuser/.jwmrc:rw"
-            - "./config/asoundrc.txt:/home/rosuser/.asoundrc:rw"
+            - "./Documents:/home/${USER}/Documents:rw"
+            - "./catkin_ws:/home/${USER}/catkin_ws:rw"
+            - "./config/wmx:/home/${USER}/.wmx:rw"
+            - "./config/asoundrc.txt:/home/${USER}/.asoundrc:rw"
+            - "./config/one-dark-Xresources.txt:/home/${USER}/.Xresources:rw"
+            - "/dev:/dev" 
             - "/run/systemd:/run/systemd"
             - "/etc/localtime:/etc/localtime:ro"
             - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
         environment:
-            - "VNC_PASSWORD=vnc123"
-            - "VNC_RESOLUTION=1920x1080"
+            - "VNC_PASSWORD=${VNC_PASSWORD}"
+            - "VNC_RESOLUTION=${VNC_RESOLUTION}"
             - "ROS_MASTER_URI=http://ros-master:11311"
             - "TURTLEBOT_MAP_FILE=/home/rosuser/Documents/map.yaml"
 #            - "ROS_HOSTNAME=ros-novnc"
@@ -72,4 +73,4 @@ services:
             - "6901:6901"
 #        networks:
 #            - ros_network
-        runtime: "nvidia"
+        runtime: "${RUNTIME}"
