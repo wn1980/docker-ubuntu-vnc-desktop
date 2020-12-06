@@ -52,11 +52,11 @@ services:
         devices:
             - "/dev:/dev"
         volumes:
-            - "./Documents:/home/${USER}/Documents:rw"
-            - "./catkin_ws:/home/${USER}/catkin_ws:rw"
-            - "./config/wmx:/home/${USER}/.wmx:rw"
-            - "./config/asoundrc.txt:/home/${USER}/.asoundrc:rw"
-            - "./config/one-dark-Xresources.txt:/home/${USER}/.Xresources:rw"
+            - "${PWD}/Documents:/home/${user}/Documents:rw"
+            - "${PWD}/catkin_ws:/home/${user}/catkin_ws:rw"
+            - "${PWD}/config/wmx:/home/${user}/.wmx:rw"
+            - "${PWD}/config/asoundrc.txt:/home/${user}/.asoundrc:rw"
+            - "${PWD}/config/one-dark-Xresources.txt:/home/${user}/.Xresources:rw"
             - "/dev:/dev" 
             - "/run/systemd:/run/systemd"
             - "/etc/localtime:/etc/localtime:ro"

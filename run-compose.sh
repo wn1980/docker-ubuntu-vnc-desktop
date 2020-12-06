@@ -48,7 +48,7 @@ fi
 cat > "$PWD/.env" <<EOF
 TAG=$TAG
 RUNTIME=$RUNTIME
-USER=$USER
+user=$user
 VNC_PASSWORD=$vnc_password
 VNC_RESOLUTION=$vnc_resolution
 EOF
