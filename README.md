@@ -1,39 +1,6 @@
 # Get started
-### Docker Installation
-- ### Typical (Ubuntu/Raspbian most platforms except arm64)
-```
-$ curl -fsSL https://get.docker.com -o get-docker.sh
-$ sh get-docker.sh
-```
-- ### Raspbian Buster
-```
-$ CHANNEL=nightly curl -fsSL https://get.docker.com -o get-docker.sh
-$ sh get-docker.sh
-```
-- ### Ubuntu 20.04 LTS Server 
-```
-$ sudo apt install docker.io docker-compose
-```
 
-- ### Ubuntu 18.04 LTS Server (Refer to [Docker manual](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
-```
-$ sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common
-
-$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-$ sudo add-apt-repository \
-   "deb [arch=arm64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-   
-$ sudo apt-get update && sudo apt-get install docker-ce
-```
-
+### Prepare Ubuntu Server for Raspberry Pi
 #### Enable WiFi using netplan ([reference](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line))
 ```
 $ sudo nano /etc/netplan/50-cloud-init.yaml #OR edit file "system-boot/network-config" directly from SD card  
@@ -82,6 +49,18 @@ wpa-psk yourPassword
 $ reboot
 ```
 
+#### Change hostname
+```
+$ sudo nano /etc/hostname
+# replace the old hostname with <custom hostname>
+$ sudo nano /etc/hosts
+# make sure that there are these 2 lines
+# 127.0.0.1 localhost
+# 127.0.1.1 <custom hostname>
+
+$ reboot
+```
+
 #### Enable swapfile
 ```
 $ sudo swapon --show #to check
@@ -101,6 +80,41 @@ $ sudo swapoff -v /swapfile
 # remove the line /swapfile swap swap defaults 0 0 from the /etc/fstab 
 $ sudo rm /swapfile
 
+```
+
+### Docker Installation
+- ### Typical (Ubuntu/Raspbian most platforms except arm64)
+```
+$ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sh get-docker.sh
+```
+- ### Raspbian Buster
+```
+$ CHANNEL=nightly curl -fsSL https://get.docker.com -o get-docker.sh
+$ sh get-docker.sh
+```
+- ### Ubuntu 20.04 LTS Server 
+```
+$ sudo apt install docker.io docker-compose
+```
+
+- ### Ubuntu 18.04 LTS Server (Refer to [Docker manual](https://docs.docker.com/install/linux/docker-ce/ubuntu/))
+```
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+$ sudo add-apt-repository \
+   "deb [arch=arm64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+   
+$ sudo apt-get update && sudo apt-get install docker-ce
 ```
 
 ### Start Docker service (if not done by installer)
