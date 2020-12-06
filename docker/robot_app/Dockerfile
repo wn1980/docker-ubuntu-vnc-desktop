@@ -1,6 +1,49 @@
 ARG tag
 FROM wn1980/w-ros-novnc${tag}
 
-# custom packages
+# Configure user
+ARG user=robot
+ARG passwd=robot
+ARG uid=1000
+ARG gid=1000
+
+ENV USER=$user \
+	PASSWD=$passwd \
+	UID=$uid \
+	GID=$gid
+
+RUN groupadd $USER && \
+    useradd --create-home --no-log-init -g $USER $USER && \
+    usermod -aG sudo $USER && \
+    echo "$PASSWD:$PASSWD" | chpasswd && \
+    chsh -s /bin/bash $USER && \
+    usermod  --uid $UID $USER && \
+    groupmod --gid $GID $USER
+
+ENV HOME=/home/$USER
+ENV ws=$HOME/catkin_ws
+ENV src=$ws/src
+
+WORKDIR $HOME
+    
+COPY ./setup/install/config.sh /opt/docker/install/
+COPY ./setup/install/ws_clone.sh /opt/docker/install/
+COPY ./setup/install/ws_make.sh /opt/docker/install/
 COPY ./setup/install/ros_pkgs.sh /opt/docker/install/
-RUN /opt/docker/install/ros_pkgs.sh
+
+USER $USER
+
+RUN rosdep fix-permissions && rosdep update
+
+RUN /opt/docker/install/config.sh
+
+USER root
+
+RUN usermod -aG audio $USER && \
+	usermod -aG video $USER && \
+	usermod -aG dialout $USER  && \
+	usermod -aG plugdev $USER 
+
+# clean
+RUN apt-get autoclean \
+    && apt-get autoremove 

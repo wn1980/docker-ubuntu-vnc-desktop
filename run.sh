@@ -42,9 +42,9 @@ else
   GPU=
 fi
 
-echo Update image
+#echo Update image
 
-docker pull wn1980/w-ros${tag}
+#docker pull wn1980/w-ros${tag}
 
 echo Build user image
 
@@ -55,7 +55,7 @@ docker build -t wn1980/w-ros-d${tag} \
 	--build-arg passwd=$passwd \
 	--build-arg uid=$(id -u) \
 	--build-arg gid=$(id -g) \
-	-f docker/robot_app/Dockerfile.user .
+	-f docker/robot_app/Dockerfile .
 
 NAME=w-ros-daemon
 

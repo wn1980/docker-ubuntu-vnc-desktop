@@ -3,15 +3,17 @@ FROM wn1980/w-ros-kinetic${tag}
 
 # prepare libraries files
 COPY ./setup/*.tar.gz /opt/
+#COPY ./setup/noVNC-1.2.0.tar.gz /opt/
+#COPY ./setup/websockify-0.9.0.tar.gz /opt/
 
 #install noVNC
 ENV NO_VNC_HOME=/opt/docker/noVNC
 WORKDIR /opt
 RUN mkdir -p $NO_VNC_HOME/utils/websockify && \
-	tar xzfv noVNC-1.1.0.tar.gz --strip 1 -C $NO_VNC_HOME && \
+	tar xzfv noVNC-1.2.0.tar.gz --strip 1 -C $NO_VNC_HOME && \
 	tar xzfv websockify-0.9.0.tar.gz --strip 1 -C $NO_VNC_HOME/utils/websockify && \
 	chmod +x -v $NO_VNC_HOME/utils/*.sh && \
-	rm -f noVNC-1.1.0.tar.gz websockify-0.9.0.tar.gz
+	rm -f noVNC-1.2.0.tar.gz websockify-0.9.0.tar.gz
 
 COPY ./setup/install/chrome.sh /opt/docker/install/
 RUN /opt/docker/install/chrome.sh
