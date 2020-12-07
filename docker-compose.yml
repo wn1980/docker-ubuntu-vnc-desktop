@@ -66,6 +66,7 @@ services:
             - "VNC_RESOLUTION=${vnc_resolution}"
             - "ROS_MASTER_URI=http://ros-master:11311"
             - "TURTLEBOT_MAP_FILE=/home/rosuser/Documents/map.yaml"
+            - "NVIDIA_VISIBLE_DEVICES=all"
 #            - "ROS_HOSTNAME=ros-novnc"
 #            - "ROS_IP=172.18.0.3"
         ports:
@@ -73,4 +74,4 @@ services:
             - "6901:6901"
 #        networks:
 #            - ros_network
-        runtime: "${time}"
+        runtime: "${runtime}"
