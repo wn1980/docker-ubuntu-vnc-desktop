@@ -8,7 +8,7 @@ services:
 
     ros-master:
 #        build: ./docker/master
-        image: wn1980/w-ros-master${TAG}
+        image: wn1980/w-ros-master${tag}
         container_name: ros_master
         restart: unless-stopped
         command: stdbuf -o L roslaunch start.launch
@@ -22,7 +22,7 @@ services:
 
     ros-joystick:
 #        build: ./docker/joystick
-        image: wn1980/w-ros-joystick${TAG}
+        image: wn1980/w-ros-joystick${tag}
         depends_on:
             - ros-master
         container_name: ros_joystick
@@ -41,7 +41,7 @@ services:
             
     ros-webui:
 #        build: ./docker/robot
-        image: wn1980/w-ros-d${TAG}
+        image: wn1980/w-ros-d${tag}
         depends_on:
             - ros-master
         container_name: ros_webui
@@ -62,8 +62,8 @@ services:
             - "/etc/localtime:/etc/localtime:ro"
             - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
         environment:
-            - "VNC_PASSWORD=${VNC_PASSWORD}"
-            - "VNC_RESOLUTION=${VNC_RESOLUTION}"
+            - "VNC_PASSWORD=${vnc_password}"
+            - "VNC_RESOLUTION=${vnc_resolution}"
             - "ROS_MASTER_URI=http://ros-master:11311"
             - "TURTLEBOT_MAP_FILE=/home/rosuser/Documents/map.yaml"
 #            - "ROS_HOSTNAME=ros-novnc"
@@ -73,4 +73,4 @@ services:
             - "6901:6901"
 #        networks:
 #            - ros_network
-        runtime: "${RUNTIME}"
+        runtime: "${time}"

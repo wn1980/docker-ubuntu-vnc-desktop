@@ -14,10 +14,10 @@ vnc_resolution=$p1080
 #===== do not change following lines, if you do not know exactly what it is. =====
 if [ $(uname -m) == 'x86_64' ] 
 then
-	TAG=
+	tag=
 elif [ $(uname -m) == 'aarch64' ] 
 then 
-	TAG=:rpi
+	tag=:rpi
 else
 	echo 'not matched platform!'
 	exit 0
@@ -36,21 +36,21 @@ then
 fi
 
 if [ "$1" == 'gpu' ]; then
-  RUNTIME='nvidia'
+  runtime='nvidia'
   GPU='--gpus all'
   echo 'Running with GPU'
 else
-  RUNTIME='runc'
+  runtime='runc'
   GPU=
 fi
 
 #Generate .env file
 cat > "$PWD/.env" <<EOF
-TAG=$TAG
-RUNTIME=$RUNTIME
+tag=$tag
+runtime=$runtime
 user=$user
-VNC_PASSWORD=$vnc_password
-VNC_RESOLUTION=$vnc_resolution
+vnc_password=$vnc_password
+vnc_resolution=$vnc_resolution
 EOF
 
 #echo Update image
@@ -59,8 +59,8 @@ EOF
 echo Build user image
 
 #Build new iamge
-docker build -t wn1980/w-ros-d${TAG} \
-	--build-arg tag=$TAG \
+docker build -t wn1980/w-ros-d${tag} \
+	--build-arg tag=$tag \
 	--build-arg user=$user \
 	--build-arg passwd=$passwd \
 	--build-arg uid=$(id -u) \
