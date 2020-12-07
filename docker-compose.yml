@@ -60,7 +60,7 @@ services:
             - "/dev:/dev" 
             - "/run/systemd:/run/systemd"
             - "/etc/localtime:/etc/localtime:ro"
-            - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
+#            - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
         environment:
             - "VNC_PASSWORD=${vnc_password}"
             - "VNC_RESOLUTION=${vnc_resolution}"
