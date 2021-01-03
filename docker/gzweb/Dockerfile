@@ -48,12 +48,11 @@ CMD mkdir /root/gzweb/http/client/assets
     
 # build gzweb
 RUN git checkout gzweb_1.4.1 
-RUN bash -c "source /usr/share/gazebo/setup.sh && ./deploy.sh -m -t"
+RUN xvfb-run -s "-screen 0 1280x1024x24" bash -c "source /usr/share/gazebo/setup.sh && ./deploy.sh -m -t"
 
 # setup environment
 EXPOSE 8080
 EXPOSE 7681
 
 # run gzserver and gzweb
-RUN xvfb-run -s "-screen 0 1280x1024x24" 
 CMD gzserver --verbose & npm start
