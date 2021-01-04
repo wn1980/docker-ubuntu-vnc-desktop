@@ -55,4 +55,4 @@ EXPOSE 8080
 EXPOSE 7681
 
 # run gzserver and gzweb
-CMD gzserver --verbose & npm start
+#CMD gzserver --verbose & npm start
