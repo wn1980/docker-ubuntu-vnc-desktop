@@ -64,10 +64,10 @@ services:
         environment:
             - "VNC_PASSWORD=${vnc_password}"
             - "VNC_RESOLUTION=${vnc_resolution}"
-            - "ROS_MASTER_URI=http://ros-master:11311"
             - "TURTLEBOT_MAP_FILE=/home/rosuser/Documents/map.yaml"
             - "NVIDIA_VISIBLE_DEVICES=all"
-            - "GAZEBO_MASTER_URI=http://localhost:11345"
+            - "ROS_MASTER_URI=http://ros-master:11311"            
+#            - "GAZEBO_MASTER_URI=http://localhost:11345"
 #            - "ROS_HOSTNAME=ros-novnc"
 #            - "ROS_IP=172.18.0.3"
         ports:
