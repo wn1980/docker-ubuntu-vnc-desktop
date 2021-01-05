@@ -36,7 +36,8 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
     
 # install NodeJS 
 #ENV NODE_VERSION=6.17.1
-ENV NODE_VERSION=12.20.1
+ENV NODE_VERSION=8.17.0
+#ENV NODE_VERSION=12.20.1
 ENV NVM_DIR=$HOME/.nvm
 
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
