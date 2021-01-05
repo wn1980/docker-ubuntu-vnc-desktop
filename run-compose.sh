@@ -69,7 +69,7 @@ docker build -t wn1980/w-ros-d${tag} \
 
 docker-compose down
 docker system prune -f
-docker-compose up -d --build ros-master ros-webui ros-joystick gzweb
+docker-compose up -d --build ros-master ros-webui ros-joystick
 
 
 

@@ -1,5 +1,6 @@
 ARG tag
-FROM wn1980/w-ros-novnc${tag}
+#FROM wn1980/w-ros-novnc${tag}
+FROM wn1980/gzweb${tag}
 
 # Configure user
 ARG user=robot
