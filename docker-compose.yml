@@ -85,7 +85,8 @@ services:
             - ros-webui        
         container_name: gzweb
         restart: unless-stopped
-        command: stdbuf -o L bash -c "export GAZEBO_MASTER_URI=http://ros-webui:11345 && gzserver --verbose && npm start -p 7681"
+#        command: stdbuf -o L bash -c "export GAZEBO_MASTER_URI=http://ros-webui:11345 && gzserver --verbose && npm start -p 7681"
+        command: stdbuf -o L bash -c "npm start -p 7681"
         volumes:
            - "/etc/localtime:/etc/localtime:ro"
         environment:

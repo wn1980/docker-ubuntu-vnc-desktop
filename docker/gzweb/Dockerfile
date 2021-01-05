@@ -4,7 +4,10 @@
 # This is an auto generated Dockerfile for gazebo:gzweb9
 # generated from docker_images/create_gzweb_image.Dockerfile.em
 #FROM gazebo:libgazebo9-xenial
-FROM gazebo:libgazebo7-xenial
+#FROM gazebo:libgazebo7-xenial
+
+ARG tag
+FROM wn1980/w-ros-novnc${tag}
 
 # install packages
 RUN apt-get update && apt-get install -q -y --no-install-recommends \
@@ -27,9 +30,9 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
 #RUN apt-get update && apt-get install -y --no-install-recommends \
 #    libgazebo9-dev=9.16.0-1* \
 #    && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    libgazebo7-dev=7.16.1-1* \
-    && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#    libgazebo7-dev=7.16.1-1* \
+#    && rm -rf /var/lib/apt/lists/*
     
 # install NodeJS 
 ENV NODE_VERSION=6.17.1
