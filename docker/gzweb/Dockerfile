@@ -57,7 +57,7 @@ WORKDIR $GZWEB_WS
 CMD mkdir ${GZWEB_WS}/http/client/assets
     
 # build gzweb
-RUN git checkout gzweb_1.4.1 
+#RUN git checkout gzweb_1.4.1 
 RUN xvfb-run -s "-screen 0 1280x1024x24" bash -c "source /usr/share/gazebo/setup.sh && ./deploy.sh -m -t"
 
 # setup environment
