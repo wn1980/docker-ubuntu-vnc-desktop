@@ -38,6 +38,19 @@ RUN rosdep fix-permissions && rosdep update
 
 RUN /opt/docker/install/config.sh
 
+# install NodeJS 
+#ENV NODE_VERSION=6.17.1
+ENV NODE_VERSION=12.20.1
+ENV NVM_DIR=$HOME/.nvm
+
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN node --version && npm --version
+
 USER root
 
 RUN usermod -aG audio $USER && \

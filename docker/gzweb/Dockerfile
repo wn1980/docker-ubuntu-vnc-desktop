@@ -35,15 +35,16 @@ RUN apt-get update && apt-get install -q -y --no-install-recommends \
 #    && rm -rf /var/lib/apt/lists/*
     
 # install NodeJS 
-ENV NODE_VERSION=6.17.1
+#ENV NODE_VERSION=6.17.1
+ENV NODE_VERSION=12.20.1
+ENV NVM_DIR=$HOME/.nvm
 
-RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
-ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+ENV PATH="$NVM_DIR/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 RUN node --version && npm --version
 	
 # clone gzweb
