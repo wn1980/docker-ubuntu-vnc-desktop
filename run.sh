@@ -9,7 +9,7 @@ p169=1600x900
 user=robot
 passwd=robot
 vnc_password=vnc123
-vnc_resolution=$p1080
+vnc_resolution=$p720
 
 #===== do not change following lines, if you do not know exactly what it is. =====
 if [ $(uname -m) == 'x86_64' ] 
@@ -67,7 +67,6 @@ docker system prune -f
 
 docker run -d --name $NAME $GPU \
 	-p 6901:6901 \
-	--net=host \
 	--privileged \
 	--restart unless-stopped \
 	-v /dev:/dev \
