@@ -1,6 +1,11 @@
 # Get started
 
 ### Prepare Ubuntu Server for Raspberry Pi
+#### To find Raspberry Pi IP address
+```
+$ arp -na | grep -i b8:27:eb
+```
+
 #### Enable WiFi using netplan ([reference](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line))
 ```
 $ sudo nano /etc/netplan/50-cloud-init.yaml #OR edit file "system-boot/network-config" directly from SD card  
