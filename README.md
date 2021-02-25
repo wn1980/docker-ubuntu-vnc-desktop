@@ -144,3 +144,9 @@ $ docker run --rm hello-world
 $ docker run --rm aarch64/hello-world
 ```
 
+### To use Portainer
+```
+$ docker volume create portainer_data
+$ docker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+```
+Then, access the service throught http://localhost:9000
