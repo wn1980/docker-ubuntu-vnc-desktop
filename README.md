@@ -3,7 +3,7 @@
 ### Prepare Ubuntu Server for Raspberry Pi
 #### To find Raspberry Pi IP address
 ```
-$ arp -na | grep -i b8:27:eb
+$ nmap -sn 192.168.1.0/24 #or arp -na | grep -i b8:27:eb
 ```
 
 #### Enable WiFi using netplan ([reference](https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line))
