@@ -54,6 +54,13 @@ wpa-psk yourPassword
 $ reboot
 ```
 
+#### Disable wpa_supplicant
+```
+$ sudo systemctl mask wpa_supplicant.service
+$ sudo mv /sbin/wpa_supplicant /sbin/no_wpa_supplicant
+$ sudo pkill wpa_supplicant
+```
+
 #### Change hostname
 ```
 $ sudo nano /etc/hostname
